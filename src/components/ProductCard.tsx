@@ -38,13 +38,14 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
           alt={product.title}
           referrerPolicy="no-referrer"
           onError={(e) => {
+            e.currentTarget.onerror = null;
             if (product.images[1] && e.currentTarget.src !== product.images[1]) {
               e.currentTarget.src = product.images[1];
             } else {
-              e.currentTarget.src = 'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=800&q=80';
+              e.currentTarget.src = '/images/products/chair.svg';
             }
           }}
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-contain p-2 object-center group-hover:scale-105 transition-transform duration-500"
           loading="eager"
         />
 

@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#090d16" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="aluminumGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="40%" stop-color="#cbd5e1"/>
+      <stop offset="70%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+    <linearGradient id="meshGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="lumbarCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <pattern id="meshPattern" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="1.5" fill="#38bdf8" fill-opacity="0.3"/>
+      <path d="M 0 6 L 12 6 M 6 0 L 6 12" stroke="#334155" stroke-width="0.75" stroke-opacity="0.6"/>
+    </pattern>
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="800" height="800" fill="url(#bgGlow)"/>
+
+  <!-- Turntable Base Ring -->
+  <ellipse cx="400" cy="710" rx="260" ry="45" fill="#000000" opacity="0.6"/>
+  <ellipse cx="400" cy="705" rx="240" ry="38" fill="none" stroke="#6366f1" stroke-width="2" stroke-opacity="0.35"/>
+
+  <!-- Main Chair Group with Shadow -->
+  <g filter="url(#dropShadow)">
+    <!-- 5-Star Aluminum Base (Ground) -->
+    <path d="M 400 645 L 230 685 L 245 700 L 400 655 Z" fill="url(#aluminumGrad)"/>
+    <path d="M 400 645 L 570 685 L 555 700 L 400 655 Z" fill="url(#aluminumGrad)"/>
+    <path d="M 400 645 L 300 710 L 310 725 L 400 655 Z" fill="url(#aluminumGrad)"/>
+    <path d="M 400 645 L 500 710 L 490 725 L 400 655 Z" fill="url(#aluminumGrad)"/>
+    <path d="M 400 645 L 400 725 L 405 735 L 400 655 Z" fill="url(#aluminumGrad)"/>
+
+    <!-- 5 Caster Wheels -->
+    <circle cx="235" cy="695" r="14" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <circle cx="565" cy="695" r="14" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <circle cx="305" cy="720" r="14" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <circle cx="495" cy="720" r="14" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+    <circle cx="400" cy="730" r="14" fill="#0f172a" stroke="#475569" stroke-width="2"/>
+
+    <!-- Central Gas Lift Cylinder -->
+    <rect x="388" y="520" width="24" height="130" rx="6" fill="url(#aluminumGrad)" stroke="#334155" stroke-width="1.5"/>
+    <rect x="392" y="550" width="16" height="70" rx="4" fill="#0f172a"/>
+
+    <!-- Recline Mechanism Bracket -->
+    <path d="M 340 500 L 460 500 L 440 535 L 360 535 Z" fill="#1e293b" stroke="url(#aluminumGrad)" stroke-width="2"/>
+
+    <!-- 4D Armrest Struts -->
+    <!-- Left Arm -->
+    <path d="M 330 480 L 260 460 L 255 350 L 280 350 L 285 440 L 340 465 Z" fill="url(#aluminumGrad)"/>
+    <rect x="235" y="335" width="80" height="22" rx="10" fill="#090d16" stroke="#475569" stroke-width="2"/>
+    <!-- Right Arm -->
+    <path d="M 470 480 L 540 460 L 545 350 L 520 350 L 515 440 L 460 465 Z" fill="url(#aluminumGrad)"/>
+    <rect x="485" y="335" width="80" height="22" rx="10" fill="#090d16" stroke="#475569" stroke-width="2"/>
+
+    <!-- Ergonomic Seat Pan -->
+    <path d="M 270 470 C 270 440, 310 435, 400 435 C 490 435, 530 440, 530 470 C 530 505, 490 515, 400 515 C 310 515, 270 505, 270 470 Z" 
+          fill="url(#meshGrad)" stroke="url(#aluminumGrad)" stroke-width="4"/>
+    <path d="M 285 470 C 285 448, 320 445, 400 445 C 480 445, 515 448, 515 470 C 515 495, 480 502, 400 502 C 320 502, 285 495, 285 470 Z" 
+          fill="url(#meshPattern)"/>
+
+    <!-- Biomorphic Spine Frame Structure -->
+    <path d="M 390 140 L 410 140 L 418 435 L 382 435 Z" fill="url(#aluminumGrad)"/>
+
+    <!-- High-Back Ergonomic Mesh Backrest Frame -->
+    <path d="M 300 150 C 300 120, 330 110, 400 110 C 470 110, 500 120, 500 150 C 505 240, 515 350, 485 410 C 460 440, 340 440, 315 410 C 285 350, 295 240, 300 150 Z" 
+          fill="url(#meshGrad)" stroke="url(#aluminumGrad)" stroke-width="5"/>
+    
+    <!-- Breathable Mesh Infill Pattern -->
+    <path d="M 315 155 C 315 130, 340 125, 400 125 C 460 125, 485 130, 485 155 C 490 235, 498 340, 470 395 C 450 425, 350 425, 330 395 C 302 340, 310 235, 315 155 Z" 
+          fill="url(#meshPattern)"/>
+
+    <!-- Biomorphic Lumbar Support Cradle (Active Cyan Accent) -->
+    <path d="M 330 320 C 360 300, 440 300, 470 320 C 475 340, 440 355, 400 355 C 360 355, 325 340, 330 320 Z" 
+          fill="#090d16" stroke="url(#lumbarCyan)" stroke-width="3.5"/>
+    <circle cx="400" cy="335" r="5" fill="#38bdf8"/>
+
+    <!-- Integrated Headrest -->
+    <path d="M 340 70 C 340 50, 365 45, 400 45 C 435 45, 460 50, 460 70 C 460 95, 435 105, 400 105 C 365 105, 340 95, 340 70 Z" 
+          fill="url(#meshGrad)" stroke="url(#aluminumGrad)" stroke-width="3"/>
+    <path d="M 350 70 C 350 58, 370 54, 400 54 C 430 54, 450 58, 450 70 C 450 88, 430 96, 400 96 C 370 96, 350 88, 350 70 Z" 
+          fill="url(#meshPattern)"/>
+    <path d="M 392 105 L 408 105 L 405 130 L 395 130 Z" fill="url(#aluminumGrad)"/>
+  </g>
+</svg>
