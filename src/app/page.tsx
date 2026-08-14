@@ -432,41 +432,6 @@ export default function SwiftShelfApp() {
         onOrderSuccess={handleOrderSuccess}
       />
 
-      {/* Luxury Footer */}
-      <footer className="w-full border-t border-white/5 py-10 px-4 lg:px-8 bg-[#07090E] text-xs text-slate-400">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <span className="font-heading font-bold text-white text-base tracking-tight">
-              SWIFT<span className="text-cyan-400">SHELF</span>
-            </span>
-            <p className="text-[11px] text-slate-500 mt-1">
-              Engineered with Next.js 15, Redis 2-Phase Stock Locking, MongoDB & Three.js
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-6 text-slate-400">
-            <span className="text-slate-300 font-semibold">Architect: Lovjyot Singh</span>
-            <span>•</span>
-            <button
-              onClick={() => setIsAIConciergeOpen(true)}
-              className="hover:text-cyan-300 transition-colors"
-            >
-              AI Concierge (Cmd+K)
-            </button>
-            <span>•</span>
-            <button
-              onClick={() => setCurrentView(currentView === 'store' ? 'admin' : 'store')}
-              className="hover:text-cyan-300 transition-colors"
-            >
-              {currentView === 'store' ? 'Admin BI Dashboard' : 'Storefront'}
-            </button>
-          </div>
-
-          <div className="text-[11px] text-slate-500 font-mono">
-            &copy; 2026 SwiftShelf Inc. All Rights Reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

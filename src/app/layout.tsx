@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+import Footer from '@/components/Footer';
+
 export const metadata: Metadata = {
   title: 'SwiftShelf | High-Concurrency AI E-Commerce Platform',
   description:
@@ -24,8 +26,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="antialiased bg-[#090B10] text-[#F8FAFC]">
-        {children}
+      <body className="antialiased bg-[#090B10] text-[#F8FAFC] flex flex-col min-h-screen">
+        <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   );
