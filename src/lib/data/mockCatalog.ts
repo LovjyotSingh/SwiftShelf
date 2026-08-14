@@ -183,7 +183,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     reservedStock: 2,
     images: [
       'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Aeron_chair_Brooklyn_Museum.jpg/800px-Aeron_chair_Brooklyn_Museum.jpg',
-      'https://images.unsplash.com/photo-1580481077195-c9906d445c71?auto=format&fit=crop&w=1000&q=80',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Aeron_chair_Brooklyn_Museum.jpg/800px-Aeron_chair_Brooklyn_Museum.jpg',
     ],
     model3dUrl: 'chair',
     tags: ['chair', 'ergonomic', 'office', 'furniture', 'desk', 'lumbar', 'mesh'],
@@ -345,6 +345,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=1000&q=80',
       'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=1000&q=80',
     ],
+    model3dUrl: 'keyboard',
     tags: ['keyboard', 'mechanical', 'hall effect', 'rapid trigger', 'gaming', 'typing', 'aluminum'],
     features: [
       'Magnetic Hall Effect Switches (0.1mm Rapid Trigger)',
@@ -423,6 +424,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=80',
       'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=1000&q=80',
     ],
+    model3dUrl: 'lamp',
     tags: ['lamp', 'lightbar', 'ambient', 'desk', 'circadian', 'smart living', 'minimalist'],
     features: [
       'Zero Screen Glare Asymmetrical Optical Lens',
@@ -500,7 +502,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     reservedStock: 4,
     images: [
       'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=1000&q=80',
     ],
+    model3dUrl: 'mouse',
     tags: ['mouse', 'wireless', 'gaming', 'ergonomic', 'accessories', 'magnesium'],
     features: [
       'Ultra-Lightweight 49g Magnesium Alloy Shell',
@@ -577,7 +581,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     reservedStock: 3,
     images: [
       'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=1000&q=80',
     ],
+    model3dUrl: 'earbuds',
     tags: ['earbuds', 'audio', 'wireless', 'anc', 'spatial', 'titanium', 'bluetooth'],
     features: [
       'Dual Hybrid Micro-Planar + Dynamic Acoustic Architecture',

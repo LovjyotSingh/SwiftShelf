@@ -116,7 +116,16 @@ export default function ProductDetailModal({
                         selectedImageIndex === idx ? 'border-cyan-400 scale-105' : 'border-white/10 opacity-60'
                       }`}
                     >
-                      <img src={img} alt="thumb" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                      <img
+                        src={img}
+                        alt="thumb"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          e.currentTarget.src = product.images[0];
+                        }}
+                        className="w-full h-full object-cover"
+                        loading="eager"
+                      />
                     </button>
                   ))}
                 </div>
