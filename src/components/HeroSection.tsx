@@ -42,53 +42,53 @@ export default function HeroSection({
         {/* Left Column: Headlines, Architecture Pills & Value Prop */}
         <div className="lg:col-span-7 space-y-6">
           {/* Engineering Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-semibold backdrop-blur-md shadow-lg">
-            <Cpu className="w-3.5 h-3.5 text-white" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full theme-card text-xs font-semibold shadow-lg">
+            <Cpu className="w-3.5 h-3.5 text-cyan-400" />
             <span>Next.js 15 App Router • Redis 2-Phase Stock Locks • Gemini AI</span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1]">
-            Next-Gen Hardware.{' '}
-            <span className="text-slate-400">
+          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
+            <span className="shiny-text">Next-Gen Hardware.</span>{' '}
+            <span className="opacity-80">
               Zero Race Conditions.
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg text-slate-300 max-w-2xl font-light leading-relaxed">
+          <p className="text-base sm:text-lg opacity-90 max-w-2xl font-light leading-relaxed">
             Experience ultra-low latency e-commerce engineered for high-concurrency flash sales. Atomic
             inventory reservation, verified sub-millisecond stock safety, and AI-assisted catalog intelligence.
           </p>
 
           {/* Technical USP Highlights */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-            <div className="p-3.5 rounded-xl bg-black/60 border border-white/15 backdrop-blur-md flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-white/10 text-white shrink-0">
-                <Zap className="w-4 h-4" />
+            <div className="p-3.5 rounded-xl theme-card flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-current/10 shrink-0">
+                <Zap className="w-4 h-4 text-cyan-400" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-white">Sub-ms Locking</h4>
-                <p className="text-[11px] text-slate-400">Redis 2-Phase atomic locks</p>
+                <h4 className="text-xs font-bold">Sub-ms Locking</h4>
+                <p className="text-[11px] opacity-70">Redis 2-Phase atomic locks</p>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-black/60 border border-white/15 backdrop-blur-md flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-white/10 text-white shrink-0">
-                <Sparkles className="w-4 h-4" />
+            <div className="p-3.5 rounded-xl theme-card flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-current/10 shrink-0">
+                <Sparkles className="w-4 h-4 text-cyan-400" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-white">AI Catalog</h4>
-                <p className="text-[11px] text-slate-400">Gemini-powered visual match</p>
+                <h4 className="text-xs font-bold">AI Catalog</h4>
+                <p className="text-[11px] opacity-70">Gemini-powered visual match</p>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-black/60 border border-white/15 backdrop-blur-md flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-white/10 text-white shrink-0">
-                <ShieldCheck className="w-4 h-4" />
+            <div className="p-3.5 rounded-xl theme-card flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-current/10 shrink-0">
+                <ShieldCheck className="w-4 h-4 text-cyan-400" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-white">ACID Resilient</h4>
-                <p className="text-[11px] text-slate-400">Zero overselling guaranteed</p>
+                <h4 className="text-xs font-bold">ACID Resilient</h4>
+                <p className="text-[11px] opacity-70">Zero overselling guaranteed</p>
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function HeroSection({
           <div className="flex flex-wrap items-center gap-4 pt-4">
             <button
               onClick={() => onQuickReserve(flagshipProduct)}
-              className="px-7 py-3.5 rounded-xl bg-white hover:bg-slate-200 text-black font-extrabold text-sm shadow-xl active:scale-95 transition-all flex items-center gap-2"
+              className="px-7 py-3.5 rounded-xl theme-button-primary font-extrabold text-sm shadow-xl active:scale-95 transition-all flex items-center gap-2"
             >
               <span>Instant Reserve Flagship</span>
               <ChevronRight className="w-4 h-4" />
@@ -105,7 +105,7 @@ export default function HeroSection({
 
             <button
               onClick={onExploreClick}
-              className="px-6 py-3.5 rounded-xl bg-black/80 hover:bg-slate-900 border border-white/20 text-slate-200 hover:text-white font-semibold text-sm backdrop-blur-md transition-all"
+              className="px-6 py-3.5 rounded-xl theme-card font-semibold text-sm hover:opacity-100 opacity-90 transition-all"
             >
               Explore Full Catalog (8 Items)
             </button>
