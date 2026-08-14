@@ -37,7 +37,6 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@types/canvas-confetti": "^1.9.0",
-    "@types/jspdf": "^2.0.0",
     "typescript": "^5.7.2",
     "prisma": "^5.22.0",
     "tsx": "^4.19.2"
