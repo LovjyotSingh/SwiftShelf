@@ -5,14 +5,17 @@
   "description": "SwiftShelf - AI-Augmented, High-Concurrency E-Commerce Platform with 2-Phase Stock Locking, 3D WebGL Customizer, and Real-Time BI",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
-    "postinstall": "prisma generate",
+    "build": "prisma generate --schema=prisma/schema.prisma && next build",
+    "postinstall": "prisma generate --schema=prisma/schema.prisma",
     "start": "next start",
     "lint": "next lint",
-    "prisma:generate": "prisma generate",
-    "prisma:push": "prisma db push",
+    "prisma:generate": "prisma generate --schema=prisma/schema.prisma",
+    "prisma:push": "prisma db push --schema=prisma/schema.prisma",
     "seed": "tsx src/scripts/seed.ts",
     "simulate:flashsale": "tsx src/scripts/simulate-flash-sale.ts"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma"
   },
   "dependencies": {
     "next": "^15.1.0",
