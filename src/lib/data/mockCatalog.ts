@@ -182,8 +182,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 12,
     reservedStock: 2,
     images: [
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Aeron_chair_Brooklyn_Museum.jpg/800px-Aeron_chair_Brooklyn_Museum.jpg',
       'https://images.unsplash.com/photo-1580481077195-c9906d445c71?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=1000&q=80',
     ],
     model3dUrl: 'chair',
     tags: ['chair', 'ergonomic', 'office', 'furniture', 'desk', 'lumbar', 'mesh'],
