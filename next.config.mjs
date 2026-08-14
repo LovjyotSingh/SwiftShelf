@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  serverExternalPackages: ['ioredis', '@prisma/client', 'prisma'],
   images: {
     remotePatterns: [
       {
@@ -13,10 +14,18 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '4mb',
-    },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        tls: false,
+        net: false,
+        fs: false,
+        dns: false,
+        child_process: false,
+      };
+    }
+    return config;
   },
 };
 
