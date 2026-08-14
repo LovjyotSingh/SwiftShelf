@@ -11,7 +11,7 @@
 [![Stripe](https://img.shields.io/badge/Stripe-Idempotent_Webhooks-635BFF?style=for-the-badge&logo=stripe)](https://stripe.com/)
 
 <p align="center">
-  A luxury, portfolio-defining e-commerce platform engineered for extreme flash-sale concurrency, zero race conditions, multimodal AI vector search, and interactive 3D WebGL material customization.
+  A luxury, portfolio-defining e-commerce platform engineered for extreme flash-sale concurrency, zero race conditions, multimodal AI vector search, and real-time business intelligence.
 </p>
 
 </div>
@@ -22,12 +22,12 @@
 
 ```mermaid
 graph TD
-    Client["Client / Next.js 15 UI (React 19 + 3D WebGL Canvas)"]
+    Client["Client / Next.js 15 UI (React 19 + Tailwind CSS)"]
     Edge["Edge Middleware (RBAC + Rate Limiting)"]
     API["Server Actions & REST API Engine"]
     
     subgraph Storage & Concurrency Layer
-        DB[("PostgreSQL + pgvector (Prisma ORM)")]
+        DB[("MongoDB + Prisma ORM")]
         Redis[("Redis / Distributed Lock Engine (Lua Scripts)")]
     end
 
@@ -48,15 +48,15 @@ graph TD
 
 ### 1. Two-Phase Stock Reservation Engine (Zero Concurrency Oversell)
 - **Phase 1 (Reservation)**: When a shopper adds an item to cart or initiates checkout, an atomic **Redis Lua script** reserves stock and issues a temporary 10-minute lock key (`res_uuid`). If stock is exhausted, incoming requests receive immediate, non-blocking 409 responses.
-- **Phase 2 (Commit or Release)**: Upon successful Stripe payment verification, the stock deduction is committed to the relational PostgreSQL database. If the 10-minute TTL expires without payment, the stock is automatically released back to the global pool.
+- **Phase 2 (Commit or Release)**: Upon successful Stripe payment verification, the stock deduction is committed to the relational database. If the 10-minute TTL expires without payment, the stock is automatically released back to the global pool.
 
 ### 2. Multimodal AI & Semantic Vector Search
 - **AI Visual Image Search**: Allows shoppers to drop screenshots or photos; uses 1536-dimensional embeddings and cosine similarity to match visual attributes with catalog products.
 - **Conversational Concierge (`Cmd + K`)**: Command palette powered by **Gemini 2.0 / LLM streaming** to query hardware specifications, acoustic profiles, and ergonomic suitability.
 - **Dynamic Review Synthesis**: Synthesizes verified customer telemetry into instant "Pros", "Cons", and "Ergonomic Fit" scores.
 
-### 3. Interactive 3D WebGL Material Customizer
-- Real-time 3D viewport with 360° mouse/touch orbit rotation, camera zoom, and instant finish switching (Obsidian Black, Lunar Silver, Raw Titanium).
+### 3. Ultra-Fast High-Res Photography Gallery
+- Real-time studio photography with responsive thumbnail navigation, finish color swatches (Obsidian Black, Lunar Silver, Raw Titanium), and instant 1-click stock locking.
 
 ### 4. Idempotent Stripe Payments & Automated Tax Invoicing
 - Guaranteed protection against duplicate charges through transactional `processed_webhook_events` caching.
