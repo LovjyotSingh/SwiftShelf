@@ -198,8 +198,8 @@ export default function ProductDetailModal({
                 disabled={isLocked || product.stock === 0}
                 className={`w-full py-3.5 rounded-xl font-bold text-sm shadow-xl flex items-center justify-center gap-2 transition-all ${
                   isLocked
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white active:scale-98'
+                    ? 'bg-white text-black font-extrabold'
+                    : 'bg-white hover:bg-slate-200 text-black active:scale-98'
                 }`}
               >
                 {isLocked ? (
