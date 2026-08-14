@@ -100,7 +100,11 @@ export default function ProductDetailModal({
                     src={product.images[selectedImageIndex] || product.images[0]}
                     alt={product.title}
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=800&q=80';
+                    }}
                     className="w-full h-full object-cover"
+                    loading="eager"
                   />
                 </div>
                 <div className="flex items-center gap-2">

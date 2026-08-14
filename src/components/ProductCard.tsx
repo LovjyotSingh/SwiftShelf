@@ -37,8 +37,15 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
           src={currentImageSrc}
           alt={product.title}
           referrerPolicy="no-referrer"
+          onError={(e) => {
+            if (product.images[1] && e.currentTarget.src !== product.images[1]) {
+              e.currentTarget.src = product.images[1];
+            } else {
+              e.currentTarget.src = 'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=800&q=80';
+            }
+          }}
           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
+          loading="eager"
         />
 
         {/* Badge */}
