@@ -114,18 +114,13 @@ export default function Navbar({
           {user ? (
             <button
               onClick={onOpenAccount}
-              className="flex items-center gap-2 p-1.5 pr-3 rounded-xl bg-slate-900/90 border border-indigo-500/40 hover:border-cyan-400 transition-all text-xs text-slate-200 shadow-md shadow-indigo-500/10"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900/90 border border-indigo-500/40 hover:border-cyan-400 transition-all text-xs text-slate-200 shadow-md shadow-indigo-500/10"
               title="View Account & Invoices"
             >
-              <img
-                src={
-                  user.avatar ||
-                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'
-                }
-                alt="avatar"
-                className="w-6 h-6 rounded-lg object-cover bg-slate-950"
-              />
-              <span className="font-bold text-cyan-300 hidden sm:inline truncate max-w-[90px]">
+              <div className="w-5 h-5 rounded-md bg-indigo-600/30 border border-indigo-400/50 flex items-center justify-center">
+                <User className="w-3 h-3 text-cyan-400" />
+              </div>
+              <span className="font-bold text-cyan-300 hidden sm:inline truncate max-w-[100px]">
                 {user.name.split(' ')[0]}
               </span>
             </button>

@@ -53,15 +53,8 @@ export default function UserAccountModal({
 
         {/* User Profile Header */}
         <div className="flex flex-col sm:flex-row items-center gap-4 border-b border-white/10 pb-6 text-center sm:text-left">
-          <div className="w-16 h-16 rounded-2xl overflow-hidden bg-slate-900 border-2 border-indigo-500/40 p-0.5 shrink-0 shadow-lg shadow-indigo-500/20">
-            <img
-              src={
-                user.avatar ||
-                'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
-              }
-              alt={user.name}
-              className="w-full h-full object-cover rounded-[14px]"
-            />
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 border border-indigo-400/40 flex items-center justify-center text-white font-extrabold text-xl shrink-0 shadow-lg shadow-indigo-500/30">
+            {user.name.charAt(0).toUpperCase()}
           </div>
 
           <div className="space-y-1 flex-1">
