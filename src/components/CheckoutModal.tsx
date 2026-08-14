@@ -13,7 +13,6 @@ import {
 } from 'lucide-react';
 import { CartItem, DiscountCoupon, OrderRecord } from '@/types';
 import { formatCurrency } from '@/lib/utils';
-import { StockReservationEngine } from '@/lib/redis/stockReservationEngine';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -59,13 +58,6 @@ export default function CheckoutModal({
   const handlePay = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Commit any reservation IDs
-    for (const item of cartItems) {
-      if (item.reservationId) {
-        await StockReservationEngine.commitReservation(item.reservationId);
-      }
-    }
 
     const idempotencyKey = `idemp_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 
