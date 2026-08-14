@@ -20,7 +20,6 @@ export const INITIAL_PRODUCTS: Product[] = [
     images: [
       'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=80',
       'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=1000&q=80',
     ],
     model3dUrl: 'headphones',
     tags: ['audio', 'wireless', 'anc', 'headphones', 'music', 'studio', 'bluetooth', 'black', 'silver'],
@@ -103,7 +102,6 @@ export const INITIAL_PRODUCTS: Product[] = [
     images: [
       'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80',
       'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=1000&q=80',
     ],
     model3dUrl: 'watch',
     tags: ['watch', 'smartwatch', 'fitness', 'titanium', 'wearables', 'health', 'gps'],
@@ -184,8 +182,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 12,
     reservedStock: 2,
     images: [
-      'https://images.unsplash.com/photo-1589384267710-7a170981ca78?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=1000&q=80',
     ],
     model3dUrl: 'chair',
     tags: ['chair', 'ergonomic', 'office', 'furniture', 'desk', 'lumbar', 'mesh'],
@@ -502,7 +500,6 @@ export const INITIAL_PRODUCTS: Product[] = [
     reservedStock: 4,
     images: [
       'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1000&q=80',
     ],
     tags: ['mouse', 'wireless', 'gaming', 'ergonomic', 'accessories', 'magnesium'],
     features: [
@@ -580,7 +577,6 @@ export const INITIAL_PRODUCTS: Product[] = [
     reservedStock: 3,
     images: [
       'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=1000&q=80',
     ],
     tags: ['earbuds', 'audio', 'wireless', 'anc', 'spatial', 'titanium', 'bluetooth'],
     features: [

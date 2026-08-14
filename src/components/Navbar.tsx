@@ -10,6 +10,7 @@ import {
   BarChart3,
   Command,
   User as UserIcon,
+  LogIn,
 } from 'lucide-react';
 import { ProductCategory } from '@/types';
 import { UserSession } from './AuthModal';
@@ -46,7 +47,7 @@ export default function Navbar({
   onToggleView,
 }: NavbarProps) {
   return (
-    <header className="sticky top-0 z-40 w-full px-4 lg:px-8 py-3.5 glass-panel border-b border-white/5 bg-[#090B10]/85 backdrop-blur-xl transition-all">
+    <header className="sticky top-0 z-40 w-full px-4 lg:px-8 py-3.5 glass-panel border-b border-white/5 bg-[#090B10]/90 backdrop-blur-xl transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         {/* Brand Logo */}
         <div
@@ -107,13 +108,14 @@ export default function Navbar({
           </button>
         </div>
 
-        {/* Right Controls: User Profile + Mode Switcher + Cart */}
+        {/* Right Controls: User Auth / Profile + Mode Switcher + Cart */}
         <div className="flex items-center gap-2.5">
           {/* User Auth / Account Trigger */}
           {user ? (
             <button
               onClick={onOpenAccount}
-              className="flex items-center gap-2 p-1.5 pr-3 rounded-xl bg-slate-900/90 border border-white/15 hover:border-indigo-400 transition-all text-xs text-slate-200"
+              className="flex items-center gap-2 p-1.5 pr-3 rounded-xl bg-slate-900/90 border border-indigo-500/40 hover:border-cyan-400 transition-all text-xs text-slate-200 shadow-md shadow-indigo-500/10"
+              title="View Account & Invoices"
             >
               <img
                 src={
@@ -123,16 +125,17 @@ export default function Navbar({
                 alt="avatar"
                 className="w-6 h-6 rounded-lg object-cover bg-slate-950"
               />
-              <span className="font-semibold hidden sm:inline truncate max-w-[90px]">
+              <span className="font-bold text-cyan-300 hidden sm:inline truncate max-w-[90px]">
                 {user.name.split(' ')[0]}
               </span>
             </button>
           ) : (
             <button
               onClick={onOpenAuth}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 border border-white/10 hover:border-indigo-400 text-slate-200 hover:text-white text-xs font-semibold transition-all"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 border border-indigo-500/40 hover:border-cyan-400 text-white text-xs font-bold transition-all shadow-md shadow-indigo-600/20 hover:scale-[1.02]"
+              title="Sign In or Create Account"
             >
-              <UserIcon className="w-3.5 h-3.5 text-indigo-400" />
+              <LogIn className="w-3.5 h-3.5 text-cyan-400" />
               <span>Sign In</span>
             </button>
           )}

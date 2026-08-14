@@ -30,14 +30,8 @@ export default function SwiftShelfApp() {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentView, setCurrentView] = useState<'store' | 'admin'>('store');
 
-  // Authentication State (Default demo logged-in user)
-  const [currentUser, setCurrentUser] = useState<UserSession | null>({
-    id: 'usr_alex_01',
-    name: 'Alex Rivera',
-    email: 'alex.rivera@techluxury.io',
-    role: 'CUSTOMER',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
-  });
+  // Authentication State (Default: Guest / Not Logged In, so Sign In is clearly visible)
+  const [currentUser, setCurrentUser] = useState<UserSession | null>(null);
 
   // Modals & Drawers
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -293,7 +287,6 @@ export default function SwiftShelfApp() {
 
   // Order Finalization
   const handleOrderSuccess = (newOrder: OrderRecord) => {
-    // Attach current user name and email
     const orderWithUser: OrderRecord = {
       ...newOrder,
       customerName: currentUser?.name || newOrder.customerName,
@@ -312,7 +305,7 @@ export default function SwiftShelfApp() {
 
   return (
     <div className="min-h-screen bg-[#090B10] text-[#F8FAFC] flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
-      {/* Floating Header with User Auth */}
+      {/* Floating Header with User Auth & Login Button */}
       <Navbar
         cartCount={cartItems.reduce((acc, it) => acc + it.quantity, 0)}
         user={currentUser}
