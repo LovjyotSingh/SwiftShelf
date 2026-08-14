@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Star, ShieldCheck, Box, Eye, ShoppingBag, Sparkles, Check, ImageOff } from 'lucide-react';
+import { Star, Box, ShoppingBag, Check } from 'lucide-react';
 import { Product, ProductVariant } from '@/types';
 import { formatCurrency } from '@/lib/utils';
 
@@ -14,7 +14,6 @@ interface ProductCardProps {
 export default function ProductCard({ product, onAddToCart, onInspect }: ProductCardProps) {
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(product.variants[0]);
   const [isAdding, setIsAdding] = useState(false);
-  const [isImageHovered, setIsImageHovered] = useState(false);
   const [imageError, setImageError] = useState(false);
 
   const handleAdd = (e: React.MouseEvent) => {
@@ -26,20 +25,15 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
 
   const currentPrice = product.price + selectedVariant.priceDelta;
   const isLowStock = product.stock <= 10;
-
-  const currentImageSrc = isImageHovered && product.images[1] ? product.images[1] : product.images[0];
+  const currentImageSrc = product.images[0];
 
   return (
     <div
       onClick={() => onInspect(product)}
-      className="group glass-card rounded-2xl p-4 flex flex-col justify-between cursor-pointer border border-white/5 hover:border-indigo-500/30 transition-all duration-300 relative overflow-hidden"
+      className="group glass-card rounded-2xl p-4 flex flex-col justify-between cursor-pointer border border-white/5 hover:border-indigo-500/30 transition-all duration-300 relative overflow-hidden bg-slate-900/60"
     >
       {/* Product Image & Badges Container */}
-      <div
-        className="relative w-full h-56 rounded-xl bg-slate-950 overflow-hidden mb-4 flex items-center justify-center"
-        onMouseEnter={() => setIsImageHovered(true)}
-        onMouseLeave={() => setIsImageHovered(false)}
-      >
+      <div className="relative w-full h-56 rounded-xl bg-slate-950 overflow-hidden mb-4 flex items-center justify-center">
         {!imageError && currentImageSrc ? (
           <img
             src={currentImageSrc}
@@ -49,9 +43,10 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
             loading="lazy"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-slate-900 to-indigo-950/40 flex flex-col items-center justify-center text-slate-500 space-y-2">
+          <div className="w-full h-full bg-gradient-to-br from-slate-900 to-indigo-950/40 flex flex-col items-center justify-center text-slate-500 space-y-2 p-4 text-center">
             <Box className="w-10 h-10 text-cyan-400" />
-            <span className="text-xs font-semibold text-slate-400">{product.title}</span>
+            <span className="text-xs font-bold text-slate-300">{product.title}</span>
+            <span className="text-[10px] text-slate-500">3D Interactive Mesh Ready</span>
           </div>
         )}
 

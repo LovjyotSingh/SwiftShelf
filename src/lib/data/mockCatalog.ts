@@ -84,16 +84,6 @@ export const INITIAL_PRODUCTS: Product[] = [
         date: '2026-07-28',
         helpfulCount: 42,
       },
-      {
-        id: 'rev_02',
-        userName: 'Elena Rostova',
-        rating: 5,
-        title: 'ANC completely deletes airline cabin noise',
-        comment: 'Flight from London to Tokyo and the battery barely dropped 20%. The transparency mode sounds completely natural.',
-        verifiedPurchase: true,
-        date: '2026-08-02',
-        helpfulCount: 19,
-      },
     ],
   },
   {
@@ -194,8 +184,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 12,
     reservedStock: 2,
     images: [
-      'https://images.unsplash.com/photo-1580481077195-c9906d445c71?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1589384267710-7a170981ca78?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=1000&q=80',
     ],
     model3dUrl: 'chair',
     tags: ['chair', 'ergonomic', 'office', 'furniture', 'desk', 'lumbar', 'mesh'],
@@ -512,7 +502,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     reservedStock: 4,
     images: [
       'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1000&q=80',
-      'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1000&q=80',
     ],
     tags: ['mouse', 'wireless', 'gaming', 'ergonomic', 'accessories', 'magnesium'],
     features: [
@@ -579,7 +569,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     id: 'prod_08_pulse_buds',
     title: 'Pulse ANC Titanium Earbuds',
     slug: 'pulse-anc-titanium-earbuds',
-    subtitle: 'Dual Micro-Planar Drivers with Spatial Spatial Audio & Head Tracking',
+    subtitle: 'Dual Micro-Planar Drivers with Spatial Audio & Head Tracking',
     description: 'Micro-planar magnetic drivers paired with dynamic subwoofers in an aerospace titanium charging case. Delivers 52dB deep hybrid noise cancellation and personalized 3D spatial soundscapes.',
     price: 249.0,
     originalPrice: 289.0,
@@ -631,7 +621,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     aiSummary: {
       pros: [
         'Audiophile grade separation with crystalline highs',
-        'Spatial audio with head tracking creates a genuine 3D theatre soundstage',
+        'Spatial audio with head tracking creates a genuine 3D soundstage',
       ],
       cons: [
         'Case is slightly heavier due to real metal construction',
