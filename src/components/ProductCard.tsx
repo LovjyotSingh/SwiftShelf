@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Star, Box, ShoppingBag, Check } from 'lucide-react';
+import { Star, Box, ShoppingBag, Check, Eye } from 'lucide-react';
 import { Product, ProductVariant } from '@/types';
 import { formatCurrency } from '@/lib/utils';
 
