@@ -5,75 +5,72 @@
 @tailwind utilities;
 
 /* ----------------------------------------------------
-   SWIFTSHELF LUXURY THEME ENGINE (3 Tailored Themes)
-   1. Dark: Pitch Black & Metallic Silver Shine
-   2. Light: Pearl White & Dark Metallic Shine
-   3. Cyber: Aurora Radiant Mixed Color Gradient
+   SWIFTSHELF LUXURY THEME TOKENS
+   1. Dark: Obsidian Velvet & Chrome Metallic Glow
+   2. Light: Pristine Pearl White & Onyx Metallic
+   3. Cyber: Aurora Holographic Gradient Mesh
    ---------------------------------------------------- */
 
 :root, html[data-theme='dark'] {
   color-scheme: dark;
-  --bg-app: #000000;
-  --bg-header: rgba(0, 0, 0, 0.92);
-  --bg-card: rgba(8, 8, 8, 0.95);
-  --bg-input: #050505;
-  --border-color: rgba(255, 255, 255, 0.18);
-  --border-color-hover: rgba(255, 255, 255, 0.45);
-  
-  --text-main: #ffffff;
-  --text-muted: #a3a3a3;
-  --text-shine: linear-gradient(135deg, #ffffff 0%, #e5e5e5 40%, #999999 70%, #ffffff 100%);
-  
-  --btn-bg: #ffffff;
-  --btn-text: #000000;
-  --btn-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
-  --accent-badge: rgba(255, 255, 255, 0.15);
-  --accent-cyan: #38bdf8;
+  --app-bg: #000000;
+  --app-text: #ffffff;
+  --app-text-muted: rgba(255, 255, 255, 0.65);
+  --app-card-bg: rgba(10, 10, 10, 0.85);
+  --app-card-border: rgba(255, 255, 255, 0.14);
+  --app-card-border-hover: rgba(255, 255, 255, 0.45);
+  --app-header-bg: rgba(0, 0, 0, 0.85);
+  --app-footer-bg: #000000;
+  --app-button-bg: #ffffff;
+  --app-button-text: #000000;
+  --app-accent-glow: rgba(255, 255, 255, 0.4);
+  --app-input-bg: rgba(12, 12, 12, 0.95);
+  --app-shine-gradient: linear-gradient(135deg, #ffffff 0%, #e2e8f0 40%, #94a3b8 70%, #ffffff 100%);
+  --app-badge-bg: rgba(255, 255, 255, 0.1);
+  --app-badge-border: rgba(255, 255, 255, 0.2);
 }
 
 html[data-theme='light'] {
   color-scheme: light;
-  --bg-app: #ffffff;
-  --bg-header: rgba(255, 255, 255, 0.94);
-  --bg-card: #ffffff;
-  --bg-input: #f8fafc;
-  --border-color: rgba(15, 23, 42, 0.15);
-  --border-color-hover: rgba(15, 23, 42, 0.4);
-  
-  --text-main: #0f172a;
-  --text-muted: #475569;
-  --text-shine: linear-gradient(135deg, #0f172a 0%, #334155 40%, #020617 70%, #1e293b 100%);
-  
-  --btn-bg: #0f172a;
-  --btn-text: #ffffff;
-  --btn-shadow: 0 4px 20px rgba(15, 23, 42, 0.25);
-  --accent-badge: rgba(15, 23, 42, 0.08);
-  --accent-cyan: #0284c7;
+  --app-bg: #ffffff;
+  --app-text: #090d16;
+  --app-text-muted: #475569;
+  --app-card-bg: rgba(255, 255, 255, 0.9);
+  --app-card-border: rgba(15, 23, 42, 0.12);
+  --app-card-border-hover: rgba(15, 23, 42, 0.35);
+  --app-header-bg: rgba(255, 255, 255, 0.88);
+  --app-footer-bg: #f8fafc;
+  --app-button-bg: #090d16;
+  --app-button-text: #ffffff;
+  --app-accent-glow: rgba(15, 23, 42, 0.2);
+  --app-input-bg: #f8fafc;
+  --app-shine-gradient: linear-gradient(135deg, #090d16 0%, #1e293b 40%, #0f172a 70%, #334155 100%);
+  --app-badge-bg: rgba(15, 23, 42, 0.06);
+  --app-badge-border: rgba(15, 23, 42, 0.15);
 }
 
 html[data-theme='cyber'] {
   color-scheme: dark;
-  --bg-app: linear-gradient(135deg, #020617 0%, #0369a1 40%, #4338ca 75%, #047857 100%);
-  --bg-header: rgba(2, 6, 23, 0.92);
-  --bg-card: rgba(15, 23, 42, 0.9);
-  --bg-input: rgba(30, 41, 59, 0.8);
-  --border-color: rgba(56, 189, 248, 0.35);
-  --border-color-hover: rgba(52, 211, 153, 0.6);
-  
-  --text-main: #f8fafc;
-  --text-muted: #cbd5e1;
-  --text-shine: linear-gradient(135deg, #38bdf8 0%, #818cf8 35%, #c084fc 70%, #34d399 100%);
-  
-  --btn-bg: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #34d399 100%);
-  --btn-text: #020617;
-  --btn-shadow: 0 4px 25px rgba(56, 189, 248, 0.4);
-  --accent-badge: rgba(56, 189, 248, 0.2);
-  --accent-cyan: #38bdf8;
+  --app-bg: linear-gradient(135deg, #030712 0%, #0c4a6e 40%, #2e1065 75%, #064e3b 100%);
+  --app-text: #ffffff;
+  --app-text-muted: rgba(240, 253, 250, 0.8);
+  --app-card-bg: rgba(6, 24, 48, 0.85);
+  --app-card-border: rgba(56, 189, 248, 0.35);
+  --app-card-border-hover: rgba(52, 211, 153, 0.6);
+  --app-header-bg: rgba(3, 14, 30, 0.85);
+  --app-footer-bg: rgba(3, 14, 30, 0.95);
+  --app-button-bg: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #34d399 100%);
+  --app-button-text: #020617;
+  --app-accent-glow: rgba(56, 189, 248, 0.45);
+  --app-input-bg: rgba(15, 34, 64, 0.9);
+  --app-shine-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 35%, #c084fc 70%, #34d399 100%);
+  --app-badge-bg: rgba(56, 189, 248, 0.15);
+  --app-badge-border: rgba(56, 189, 248, 0.35);
 }
 
 html {
   scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
+  background: var(--app-bg);
 }
 
 * {
@@ -84,12 +81,13 @@ html {
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--bg-app);
+  background: var(--app-bg);
   background-attachment: fixed;
-  color: var(--text-main);
+  color: var(--app-text);
   overflow-x: hidden;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   transition: background 0.4s ease, color 0.4s ease;
 }
 
@@ -98,57 +96,125 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 /* ----------------------------------------------------
-   SHINY TEXT & GLOW UTILITIES
+   LUXURY UTILITY CLASSES
    ---------------------------------------------------- */
+
+/* Shimmering Metallic Shiny Text */
 .shiny-text {
-  background: var(--text-shine);
+  background: var(--app-shine-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
+  display: inline-block;
 }
 
-.theme-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
+/* Luxury Glassmorphic Cards */
+.luxury-card {
+  position: relative;
+  background: var(--app-card-bg) !important;
+  border: 1px solid var(--app-card-border) !important;
+  color: var(--app-text) !important;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.theme-card:hover {
-  border-color: var(--border-color-hover);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+.luxury-card:hover {
+  border-color: var(--app-card-border-hover) !important;
+  box-shadow: 0 16px 40px var(--app-accent-glow);
+  transform: translateY(-2px);
 }
 
-.theme-button-primary {
-  background: var(--btn-bg);
-  color: var(--btn-text);
+/* Luxury Primary Button */
+.luxury-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.875rem;
+  background: var(--app-button-bg) !important;
+  color: var(--app-button-text) !important;
   font-weight: 800;
-  box-shadow: var(--btn-shadow);
+  padding: 0.65rem 1.35rem;
+  box-shadow: 0 4px 20px var(--app-accent-glow);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.luxury-button:hover {
+  opacity: 0.92;
+  transform: translateY(-1.5px) scale(1.02);
+  box-shadow: 0 8px 28px var(--app-accent-glow);
+}
+
+.luxury-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Luxury Secondary / Outline Button */
+.luxury-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.875rem;
+  border: 1px solid var(--app-card-border) !important;
+  background: var(--app-card-bg) !important;
+  color: var(--app-text) !important;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.luxury-button-secondary:hover {
+  border-color: var(--app-card-border-hover) !important;
+  background: var(--app-badge-bg) !important;
+  box-shadow: 0 4px 18px var(--app-accent-glow);
+  transform: translateY(-1px);
+}
+
+/* Luxury Badge */
+.luxury-badge {
+  background: var(--app-badge-bg);
+  border: 1px solid var(--app-badge-border);
+  color: var(--app-text);
+  backdrop-filter: blur(10px);
+}
+
+/* Luxury Input */
+.luxury-input {
+  width: 100%;
+  border-radius: 0.875rem;
+  border: 1px solid var(--app-card-border) !important;
+  background: var(--app-input-bg) !important;
+  color: var(--app-text) !important;
+  padding: 0.65rem 1rem;
+  font-size: 0.875rem;
   transition: all 0.25s ease;
 }
 
-.theme-button-primary:hover {
-  opacity: 0.92;
-  transform: translateY(-1.5px);
+.luxury-input:focus {
+  outline: none;
+  border-color: var(--app-card-border-hover) !important;
+  box-shadow: 0 0 20px var(--app-accent-glow);
 }
 
-.theme-button-trigger {
-  background: var(--bg-card);
-  color: var(--text-main);
-  border-color: var(--border-color);
+/* Theme Header & Footer */
+.theme-header {
+  background: var(--app-header-bg) !important;
+  border-bottom: 1px solid var(--app-card-border) !important;
+  color: var(--app-text) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
-.theme-dropdown-panel {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-}
-
-.theme-dropdown-item-active {
-  background: var(--btn-bg);
-  color: var(--btn-text);
+.theme-footer {
+  background: var(--app-footer-bg) !important;
+  border-top: 1px solid var(--app-card-border) !important;
+  color: var(--app-text-muted) !important;
 }
 
 /* Custom Scrollbar */
@@ -158,10 +224,14 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-app);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
+  background: var(--app-card-border);
   border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--app-text-muted);
 }

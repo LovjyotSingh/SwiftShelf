@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Star, Box, ShoppingBag, Check, Eye } from 'lucide-react';
+import { Star, ShoppingBag, Check, Eye } from 'lucide-react';
 import { Product, ProductVariant } from '@/types';
 import { formatCurrency } from '@/lib/utils';
 
@@ -29,10 +29,10 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
   return (
     <div
       onClick={() => onInspect(product)}
-      className="group theme-card rounded-2xl p-4 flex flex-col justify-between cursor-pointer relative overflow-hidden shadow-lg"
+      className="group luxury-card rounded-2xl p-4 flex flex-col justify-between cursor-pointer relative overflow-hidden"
     >
       {/* Product Image & Badges Container */}
-      <div className="relative w-full h-56 rounded-xl bg-black/80 overflow-hidden mb-4 flex items-center justify-center border border-white/10">
+      <div className="relative w-full h-56 rounded-xl bg-black/85 overflow-hidden mb-4 flex items-center justify-center border border-inherit">
         <img
           src={currentImageSrc}
           alt={product.title}
@@ -45,7 +45,7 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
               e.currentTarget.src = '/images/products/chair.svg';
             }
           }}
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
           loading="eager"
         />
 
@@ -54,8 +54,8 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
           <div
             className={`absolute top-3 left-3 px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider ${
               product.badge === 'FLASH SALE'
-                ? 'theme-button-primary font-mono animate-pulse'
-                : 'theme-button-primary'
+                ? 'luxury-button font-mono animate-pulse'
+                : 'luxury-button'
             }`}
           >
             {product.badge}
@@ -63,15 +63,15 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
         )}
 
         {/* Inspect Trigger Overlay */}
-        <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg theme-card text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity shadow-md">
+        <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg luxury-badge text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity shadow-md">
           <Eye className="w-3 h-3 text-cyan-400" />
           <span>Quick Inspect</span>
         </div>
 
         {/* Stock Level Bar */}
-        <div className="absolute bottom-2 left-2 right-2 px-2.5 py-1 rounded-lg theme-card flex items-center justify-between text-[11px]">
-          <span className="opacity-70">Stock Availability</span>
-          <span className="font-semibold font-mono text-cyan-400">
+        <div className="absolute bottom-2 left-2 right-2 px-2.5 py-1 rounded-lg luxury-badge flex items-center justify-between text-[11px]">
+          <span className="opacity-70 font-medium">Stock Availability</span>
+          <span className="font-bold font-mono text-cyan-400">
             {product.stock} units left
           </span>
         </div>
@@ -80,7 +80,7 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
       {/* Product Information */}
       <div className="space-y-2 flex-1">
         <div className="flex items-center justify-between text-xs">
-          <span className="opacity-70 font-semibold tracking-wide uppercase text-[11px]">
+          <span className="opacity-70 font-bold tracking-wider uppercase text-[10px] font-mono">
             {product.category}
           </span>
           <div className="flex items-center gap-1 font-medium">
@@ -109,7 +109,7 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
                 className={`w-4 h-4 rounded-full border transition-all ${
                   selectedVariant.id === v.id
                     ? 'border-cyan-400 scale-125 shadow-sm'
-                    : 'border-white/20 hover:border-white/50'
+                    : 'border-inherit hover:scale-110'
                 }`}
                 style={{ backgroundColor: v.colorHex }}
                 title={`${v.colorName} (${v.priceDelta > 0 ? `+$${v.priceDelta}` : 'Included'})`}
@@ -138,20 +138,16 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
         <button
           onClick={handleAdd}
           disabled={isAdding}
-          className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
-            isAdding
-              ? 'theme-button-primary font-extrabold'
-              : 'theme-button-primary active:scale-95'
-          }`}
+          className="luxury-button text-xs py-2 px-3.5"
         >
           {isAdding ? (
             <>
-              <Check className="w-3.5 h-3.5" />
+              <Check className="w-3.5 h-3.5 mr-1" />
               <span>Locked!</span>
             </>
           ) : (
             <>
-              <ShoppingBag className="w-3.5 h-3.5" />
+              <ShoppingBag className="w-3.5 h-3.5 mr-1" />
               <span>Lock Stock</span>
             </>
           )}

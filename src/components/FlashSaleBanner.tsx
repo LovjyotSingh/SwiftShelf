@@ -20,7 +20,6 @@ export default function FlashSaleBanner({ flashProduct, onQuickReserve }: FlashS
     }, 1000);
 
     const telemetryInterval = setInterval(() => {
-      // Simulate real-time fluctuating concurrency
       setActiveConcurrentShoppers((prev) =>
         Math.max(900, Math.min(2400, prev + Math.floor(Math.random() * 21) - 10))
       );
@@ -36,49 +35,49 @@ export default function FlashSaleBanner({ flashProduct, onQuickReserve }: FlashS
   const percentageReserved = Math.round((flashProduct.reservedStock / totalStock) * 100);
 
   return (
-    <div className="w-full bg-gradient-to-r from-rose-950/40 via-purple-950/40 to-slate-900/40 border-y border-rose-500/20 py-2.5 px-4 backdrop-blur-md">
+    <div className="w-full border-b border-inherit bg-current/5 py-2.5 px-4 backdrop-blur-md relative z-20">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
         {/* Left: Flash Sale Tag & Timer */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-400 font-bold tracking-wider uppercase animate-pulse">
-            <Flame className="w-3.5 h-3.5 fill-rose-500 text-rose-500" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full luxury-badge font-bold tracking-wider uppercase">
+            <Flame className="w-3.5 h-3.5 text-rose-500 fill-rose-500 animate-pulse" />
             <span>FLASH DROP ACTIVE</span>
           </div>
 
-          <div className="flex items-center gap-1.5 text-slate-300 font-medium">
-            <Clock className="w-3.5 h-3.5 text-indigo-400" />
+          <div className="flex items-center gap-1.5 font-medium opacity-85">
+            <Clock className="w-3.5 h-3.5 text-cyan-400" />
             <span>Drop Ends in:</span>
-            <span className="font-mono font-bold text-white bg-slate-950/80 px-2 py-0.5 rounded border border-white/10">
+            <span className="font-mono font-bold px-2 py-0.5 rounded luxury-badge">
               {formatTimeRemaining(timeLeftMs)}
             </span>
           </div>
 
-          <span className="hidden lg:inline text-slate-400">
-            • <strong className="text-white">{flashProduct.title}</strong> discounted to{' '}
-            <span className="text-emerald-400 font-bold">${flashProduct.price}</span>
+          <span className="hidden lg:inline opacity-70">
+            • <strong className="shiny-text">{flashProduct.title}</strong> discounted to{' '}
+            <span className="font-bold text-cyan-400">${flashProduct.price}</span>
           </span>
         </div>
 
         {/* Center/Right: Concurrency Telemetry & Stock Lock CTA */}
         <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-2 text-slate-300">
+          <div className="hidden sm:flex items-center gap-2 opacity-80">
             <Activity className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
             <span>
-              <strong className="text-cyan-300 font-mono">{activeConcurrentShoppers.toLocaleString()}</strong> live shoppers
+              <strong className="font-mono text-cyan-400">{activeConcurrentShoppers.toLocaleString()}</strong> live shoppers
             </span>
-            <span className="text-slate-500">|</span>
-            <span className="flex items-center gap-1 text-amber-400">
+            <span className="opacity-40">|</span>
+            <span className="flex items-center gap-1 text-cyan-400">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>{percentageReserved}% Locked in Redis Engine</span>
+              <span>{percentageReserved}% Locked in Redis</span>
             </span>
           </div>
 
           <button
             onClick={() => onQuickReserve(flashProduct)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-rose-600 to-indigo-600 text-white font-semibold shadow-md shadow-rose-600/30 hover:scale-105 active:scale-95 transition-all text-xs whitespace-nowrap"
+            className="luxury-button py-1.5 px-3 text-xs flex items-center gap-1.5"
           >
-            <Zap className="w-3.5 h-3.5 fill-white" />
-            <span>Lock Stock ($389)</span>
+            <Zap className="w-3.5 h-3.5" />
+            <span>Lock Stock (${flashProduct.price})</span>
             <ArrowRight className="w-3 h-3" />
           </button>
         </div>
