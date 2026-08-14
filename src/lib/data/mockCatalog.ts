@@ -182,7 +182,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 12,
     reservedStock: 2,
     images: [
-      'https://images.unsplash.com/photo-1688578735427-994ecbf9a34a?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1580481077195-c9906d445c71?auto=format&fit=crop&w=1000&q=80',
       'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=1000&q=80',
     ],
     model3dUrl: 'chair',
