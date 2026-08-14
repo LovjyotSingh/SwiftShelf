@@ -1,16 +1,13 @@
-// SwiftShelf Enterprise Database Schema
-// Optimized for PostgreSQL with B+ Tree compound indexing & pgvector support
+// SwiftShelf Database Schema - MongoDB Atlas Connector
+// Optimized for MongoDB Document collections with B+ Tree Indexing
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider   = "postgresql"
-  url        = env("DATABASE_URL")
-  directUrl  = env("DIRECT_URL")
-  extensions = [pgvector(map: "vector")]
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 enum Role {
@@ -35,24 +32,23 @@ enum DiscountType {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  name          String?
-  passwordHash  String
-  role          Role      @default(CUSTOMER)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  email        String   @unique
+  name         String?
+  passwordHash String
+  role         Role     @default(CUSTOMER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  orders        Order[]
-  reviews       Review[]
-  reservations  InventoryReservation[]
+  orders       Order[]
+  reviews      Review[]
+  reservations InventoryReservation[]
 
-  @@index([email])
   @@index([role])
 }
 
 model Category {
-  id          String    @id @default(cuid())
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   name        String    @unique
   slug        String    @unique
   description String?
@@ -60,144 +56,137 @@ model Category {
 }
 
 model Product {
-  id              String             @id @default(cuid())
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
   title           String
-  slug            String             @unique
+  slug            String    @unique
   subtitle        String?
   description     String
-  price           Decimal            @db.Decimal(10, 2)
-  originalPrice   Decimal?           @db.Decimal(10, 2)
-  categoryId      String
-  category        Category           @relation(fields: [categoryId], references: [id])
-  rating          Float              @default(0.0)
-  reviewCount     Int                @default(0)
+  price           Float
+  originalPrice   Float?
+  categoryId      String    @db.ObjectId
+  category        Category  @relation(fields: [categoryId], references: [id])
+  rating          Float     @default(0.0)
+  reviewCount     Int       @default(0)
   images          String[]
   model3dUrl      String?
   badge           String?
-  isFlashSale     Boolean            @default(false)
+  isFlashSale     Boolean   @default(false)
   flashSaleEndsAt DateTime?
-  stock           Int                @default(0)
-  reservedStock   Int                @default(0)
+  stock           Int       @default(0)
+  reservedStock   Int       @default(0)
   tags            String[]
   features        String[]
   specs           Json?
-  
-  // pgvector embedding for multimodal similarity search (1536 dims)
-  // embedding    Unsupported("vector(1536)")?
 
-  variants        ProductVariant[]
-  reviews         Review[]
-  orderItems      OrderItem[]
-  reservations    InventoryReservation[]
+  variants     ProductVariant[]
+  reviews      Review[]
+  orderItems   OrderItem[]
+  reservations InventoryReservation[]
 
-  createdAt       DateTime           @default(now())
-  updatedAt       DateTime           @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  // B+ Tree Compound indexes for ultra-fast query execution (<15ms p95)
   @@index([categoryId, price])
   @@index([isFlashSale, flashSaleEndsAt])
   @@index([rating, reviewCount])
-  @@index([createdAt(sort: Desc)])
 }
 
 model ProductVariant {
-  id              String    @id @default(cuid())
-  productId       String
-  product         Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
-  name            String
-  sku             String    @unique
-  colorName       String
-  colorHex        String
-  priceDelta      Decimal   @default(0.00) @db.Decimal(10, 2)
-  stock           Int       @default(0)
-  reservedStock   Int       @default(0)
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId     String   @db.ObjectId
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name          String
+  sku           String   @unique
+  colorName     String
+  colorHex      String
+  priceDelta    Float    @default(0.0)
+  stock         Int      @default(0)
+  reservedStock Int      @default(0)
 
-  reservations    InventoryReservation[]
-  orderItems      OrderItem[]
+  reservations InventoryReservation[]
+  orderItems   OrderItem[]
 
   @@index([productId, sku])
 }
 
 model InventoryReservation {
-  id          String         @id @default(cuid())
-  productId   String
-  product     Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
-  variantId   String?
-  variant     ProductVariant? @relation(fields: [variantId], references: [id], onDelete: Cascade)
-  userId      String?
-  user        User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
-  quantity    Int
-  expiresAt   DateTime
-  isClaimed   Boolean        @default(false)
-  createdAt   DateTime       @default(now())
+  id        String          @id @default(auto()) @map("_id") @db.ObjectId
+  productId String          @db.ObjectId
+  product   Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variantId String?         @db.ObjectId
+  variant   ProductVariant? @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  userId    String?         @db.ObjectId
+  user      User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  quantity  Int
+  expiresAt DateTime
+  isClaimed Boolean         @default(false)
+  createdAt DateTime        @default(now())
 
-  // Fast cleanup index for expired locks
   @@index([expiresAt, isClaimed])
   @@index([productId, variantId])
 }
 
 model Order {
-  id              String        @id @default(cuid())
-  orderNumber     String        @unique
-  userId          String?
-  user            User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  orderNumber     String      @unique
+  userId          String?     @db.ObjectId
+  user            User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
   customerName    String
   customerEmail   String
   shippingAddress Json
-  subtotal        Decimal       @db.Decimal(10, 2)
-  discountAmount  Decimal       @default(0.00) @db.Decimal(10, 2)
-  taxAmount       Decimal       @db.Decimal(10, 2)
-  shippingAmount  Decimal       @default(0.00) @db.Decimal(10, 2)
-  total           Decimal       @db.Decimal(10, 2)
-  status          OrderStatus   @default(PENDING)
-  paymentIntentId String?       @unique
-  idempotencyKey  String        @unique
-  
-  items           OrderItem[]
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  subtotal        Float
+  discountAmount  Float       @default(0.0)
+  taxAmount       Float
+  shippingAmount  Float       @default(0.0)
+  total           Float
+  status          OrderStatus @default(PENDING)
+  paymentIntentId String?     @unique
+  idempotencyKey  String      @unique
+
+  items     OrderItem[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
   @@index([customerEmail])
-  @@index([status, createdAt(sort: Desc)])
+  @@index([status, createdAt])
   @@index([idempotencyKey])
 }
 
 model OrderItem {
-  id         String         @id @default(cuid())
-  orderId    String
-  order      Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId  String
-  product    Product        @relation(fields: [productId], references: [id])
-  variantId  String?
+  id         String          @id @default(auto()) @map("_id") @db.ObjectId
+  orderId    String          @db.ObjectId
+  order      Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId  String          @db.ObjectId
+  product    Product         @relation(fields: [productId], references: [id])
+  variantId  String?         @db.ObjectId
   variant    ProductVariant? @relation(fields: [variantId], references: [id])
   quantity   Int
-  unitPrice  Decimal        @db.Decimal(10, 2)
-  totalPrice Decimal        @db.Decimal(10, 2)
+  unitPrice  Float
+  totalPrice Float
 
   @@index([orderId])
   @@index([productId])
 }
 
 model Review {
-  id               String    @id @default(cuid())
-  productId        String
-  product          Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
-  userId           String?
-  user             User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId        String   @db.ObjectId
+  product          Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId           String?  @db.ObjectId
+  user             User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   userName         String
   rating           Int
   title            String
   comment          String
-  verifiedPurchase Boolean   @default(true)
-  helpfulCount     Int       @default(0)
-  createdAt        DateTime  @default(now())
+  verifiedPurchase Boolean  @default(true)
+  helpfulCount     Int      @default(0)
+  createdAt        DateTime @default(now())
 
   @@index([productId, rating])
-  @@index([createdAt(sort: Desc)])
 }
 
 model ProcessedWebhook {
-  id        String   @id
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   eventId   String   @unique
   eventType String
   payload   Json
