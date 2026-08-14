@@ -29,7 +29,8 @@ interface NavbarProps {
   onToggleView: (view: 'store' | 'admin') => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  activeCategory: ProductCategory | 'ALL';
+  selectedCategory?: ProductCategory | 'ALL';
+  activeCategory?: ProductCategory | 'ALL';
   onSelectCategory: (cat: ProductCategory | 'ALL') => void;
 }
 
