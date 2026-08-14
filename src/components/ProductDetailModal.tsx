@@ -10,7 +10,7 @@ import {
   Check,
   Sparkles,
 } from 'lucide-react';
-import { Product, ProductVariant, Review } from '@/types';
+import { Product, ProductVariant, ReviewItem } from '@/types';
 import { formatCurrency } from '@/lib/utils';
 import ReviewSection from './ReviewSection';
 
@@ -18,7 +18,7 @@ interface ProductDetailModalProps {
   product: Product | null;
   onClose: () => void;
   onAddToCart: (product: Product, variant: ProductVariant) => void;
-  onAddReview: (productId: string, review: Omit<Review, 'id' | 'createdAt'>) => void;
+  onAddReview: (productId: string, review: ReviewItem) => void;
 }
 
 export default function ProductDetailModal({
