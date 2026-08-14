@@ -118,7 +118,7 @@ export default function Navbar({
               title="View Account & Invoices"
             >
               <div className="w-5 h-5 rounded-md bg-indigo-600/30 border border-indigo-400/50 flex items-center justify-center">
-                <User className="w-3 h-3 text-cyan-400" />
+                <UserIcon className="w-3 h-3 text-cyan-400" />
               </div>
               <span className="font-bold text-cyan-300 hidden sm:inline truncate max-w-[100px]">
                 {user.name.split(' ')[0]}
