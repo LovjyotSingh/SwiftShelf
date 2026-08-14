@@ -319,7 +319,7 @@ export default function SwiftShelfApp() {
   const flagshipProduct = products[0];
 
   return (
-    <div className="min-h-screen bg-[#090B10] text-[#F8FAFC] flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen flex flex-col justify-between bg-transparent text-inherit transition-colors duration-300">
       {/* Floating Header with User Auth & Login Button */}
       <Navbar
         cartCount={cartItems.reduce((acc, it) => acc + it.quantity, 0)}

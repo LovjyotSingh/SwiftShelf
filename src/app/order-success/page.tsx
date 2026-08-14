@@ -42,8 +42,8 @@ export default function OrderSuccessPage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#090B10] text-[#F8FAFC] flex flex-col justify-between py-12 px-4">
-      <div className="max-w-2xl mx-auto w-full glass-card rounded-3xl p-8 border border-white/10 shadow-2xl bg-[#0D111A] text-center space-y-6">
+    <div className="min-h-screen bg-transparent text-inherit flex flex-col justify-between py-12 px-4 transition-colors duration-300">
+      <div className="max-w-2xl mx-auto w-full luxury-card rounded-3xl p-8 shadow-2xl text-center space-y-6">
         {/* Animated Badge */}
         <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400 shadow-xl shadow-emerald-500/20">
           <CheckCircle2 className="w-8 h-8" />

@@ -125,7 +125,7 @@ export default function AdminDashboard({
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Revenue */}
-        <div className="glass-card rounded-2xl p-5 border border-white/5 space-y-2">
+        <div className="luxury-card rounded-2xl p-5 border border-inherit space-y-2">
           <div className="flex items-center justify-between text-slate-400 text-xs">
             <span>Gross Revenue (MRR)</span>
             <div className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400">
@@ -140,7 +140,7 @@ export default function AdminDashboard({
         </div>
 
         {/* Total Orders */}
-        <div className="glass-card rounded-2xl p-5 border border-white/5 space-y-2">
+        <div className="luxury-card rounded-2xl p-5 border border-inherit space-y-2">
           <div className="flex items-center justify-between text-slate-400 text-xs">
             <span>Total Orders</span>
             <div className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-400">
@@ -152,7 +152,7 @@ export default function AdminDashboard({
         </div>
 
         {/* Average Order Value (AOV) */}
-        <div className="glass-card rounded-2xl p-5 border border-white/5 space-y-2">
+        <div className="luxury-card rounded-2xl p-5 border border-inherit space-y-2">
           <div className="flex items-center justify-between text-slate-400 text-xs">
             <span>Average Order Value</span>
             <div className="p-1.5 rounded-lg bg-purple-500/10 text-purple-400">
@@ -164,7 +164,7 @@ export default function AdminDashboard({
         </div>
 
         {/* Concurrency Lock Success Rate */}
-        <div className="glass-card rounded-2xl p-5 border border-white/5 space-y-2">
+        <div className="luxury-card rounded-2xl p-5 border border-inherit space-y-2">
           <div className="flex items-center justify-between text-slate-400 text-xs">
             <span>2-Phase Lock Resilience</span>
             <div className="p-1.5 rounded-lg bg-cyan-500/10 text-cyan-400">
@@ -181,7 +181,7 @@ export default function AdminDashboard({
       {/* Mid Section: Revenue Velocity Chart & Restock Predictions */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Revenue Velocity Simulated Bar Visualizer */}
-        <div className="lg:col-span-8 glass-card rounded-2xl p-6 border border-white/5 space-y-4">
+        <div className="lg:col-span-8 luxury-card rounded-2xl p-6 border border-inherit space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-heading text-base font-bold text-white">
@@ -220,7 +220,7 @@ export default function AdminDashboard({
         </div>
 
         {/* Predictive Restock Forecaster */}
-        <div className="lg:col-span-4 glass-card rounded-2xl p-6 border border-white/5 space-y-4">
+        <div className="lg:col-span-4 luxury-card rounded-2xl p-6 border border-inherit space-y-4 flex flex-col justify-between">
           <div className="flex items-center gap-2 text-amber-400">
             <AlertTriangle className="w-5 h-5" />
             <h3 className="font-heading text-base font-bold text-white">
@@ -258,7 +258,7 @@ export default function AdminDashboard({
       </div>
 
       {/* Bottom: Live Orders Audit Trail Table */}
-      <div className="glass-card rounded-2xl p-6 border border-white/5 space-y-4">
+      <div className="luxury-card rounded-2xl p-6 border border-inherit space-y-4">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-heading text-base font-bold text-white">
