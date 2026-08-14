@@ -141,7 +141,7 @@ export default function ProductDetailModal({
                 </div>
                 {product.originalPrice && (
                   <div className="text-xs opacity-50 line-through">
-                    {formatCurrency(product.originalPrice + selectedVariant.priceDelta)}
+                    {formatCurrency(product.originalPrice + activeVariant.priceDelta)}
                   </div>
                 )}
               </div>
