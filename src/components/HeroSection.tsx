@@ -208,6 +208,7 @@ export default function HeroSection({
               ) : (
                 <ThreeDProductViewer
                   productType={flagshipProduct.model3dUrl || 'headphones'}
+                  productImage={flagshipProduct.images[0]}
                   selectedColor={selectedColorHex}
                 />
               )}

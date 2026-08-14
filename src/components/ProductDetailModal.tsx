@@ -91,6 +91,7 @@ export default function ProductDetailModal({
             {activeMediaTab === '3d' ? (
               <ThreeDProductViewer
                 productType={product.model3dUrl || 'headphones'}
+                productImage={product.images[selectedImageIndex] || product.images[0]}
                 selectedColor={selectedVariant.colorHex}
               />
             ) : (
