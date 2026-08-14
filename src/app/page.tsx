@@ -1,0 +1,409 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Navbar from '@/components/Navbar';
+import FlashSaleBanner from '@/components/FlashSaleBanner';
+import HeroSection from '@/components/HeroSection';
+import ProductCatalog from '@/components/ProductCatalog';
+import ProductDetailModal from '@/components/ProductDetailModal';
+import AIVisualSearchModal from '@/components/AIVisualSearchModal';
+import AIConciergePalette from '@/components/AIConciergePalette';
+import CartDrawer from '@/components/CartDrawer';
+import CheckoutModal from '@/components/CheckoutModal';
+import AdminDashboard from '@/components/AdminDashboard';
+import { INITIAL_PRODUCTS } from '@/lib/data/mockCatalog';
+import {
+  Product,
+  ProductCategory,
+  ProductVariant,
+  CartItem,
+  DiscountCoupon,
+  OrderRecord,
+  ReviewItem,
+} from '@/types';
+import { StockReservationEngine } from '@/lib/redis/stockReservationEngine';
+
+export default function SwiftShelfApp() {
+  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
+  const [selectedCategory, setSelectedCategory] = useState<ProductCategory | 'ALL'>('ALL');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentView, setCurrentView] = useState<'store' | 'admin'>('store');
+
+  // Modals & Drawers
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isVisualSearchOpen, setIsVisualSearchOpen] = useState(false);
+  const [isAIConciergeOpen, setIsAIConciergeOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [inspectProduct, setInspectProduct] = useState<Product | null>(null);
+
+  // Cart & Orders State
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [appliedCoupon, setAppliedCoupon] = useState<DiscountCoupon | null>(null);
+  const [orders, setOrders] = useState<OrderRecord[]>([
+    {
+      id: 'ord_init_01',
+      orderNumber: 'SWIFT-948201',
+      customerName: 'Marcus Vance',
+      customerEmail: 'marcus.v@sounddesign.io',
+      shippingAddress: {
+        street: '42 Audio Way',
+        city: 'Seattle',
+        state: 'WA',
+        zip: '98101',
+        country: 'USA',
+      },
+      items: [
+        {
+          productId: 'prod_01_spectre_pro',
+          title: 'Spectre Pro ANC Headphones',
+          variantName: 'Obsidian Black',
+          quantity: 1,
+          unitPrice: 389.0,
+          totalPrice: 389.0,
+        },
+      ],
+      subtotal: 389.0,
+      discountAmount: 0,
+      taxAmount: 31.12,
+      shippingAmount: 0,
+      total: 420.12,
+      status: 'DELIVERED',
+      paymentIntentId: 'pi_3PjX82Kl9',
+      idempotencyKey: 'idemp_init_82910384',
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString(),
+    },
+    {
+      id: 'ord_init_02',
+      orderNumber: 'SWIFT-651930',
+      customerName: 'Elena Rostova',
+      customerEmail: 'elena.rostova@techvanguard.ch',
+      shippingAddress: {
+        street: '88 Alpine Blvd',
+        city: 'Geneva',
+        state: 'GE',
+        zip: '1201',
+        country: 'Switzerland',
+      },
+      items: [
+        {
+          productId: 'prod_02_aurora_watch',
+          title: 'Aura Horizon Titan Smartwatch',
+          variantName: 'Raw Titanium',
+          quantity: 1,
+          unitPrice: 499.0,
+          totalPrice: 499.0,
+        },
+      ],
+      subtotal: 499.0,
+      discountAmount: 49.9,
+      taxAmount: 35.92,
+      shippingAmount: 0,
+      total: 485.02,
+      status: 'PAID',
+      paymentIntentId: 'pi_3PjY99Zx1',
+      idempotencyKey: 'idemp_init_91048291',
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(),
+    },
+  ]);
+
+  // Global Cmd+K Keyboard Shortcut for AI Concierge
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsAIConciergeOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Stock Reservation Handler (Add to Cart with 2-Phase Concurrency Lock)
+  const handleAddToCart = async (product: Product, variant: ProductVariant) => {
+    // Phase 1: Lock stock in Redis / Concurrency Engine
+    const res = await StockReservationEngine.reserveStock(product.id, variant.id, 1);
+
+    if (!res.success) {
+      alert(`⚠️ Flash-Sale Concurrency Notice: ${res.error}`);
+      return;
+    }
+
+    // Decrement local visual stock
+    setProducts((prev) =>
+      prev.map((p) => {
+        if (p.id === product.id) {
+          return {
+            ...p,
+            stock: Math.max(0, p.stock - 1),
+            reservedStock: p.reservedStock + 1,
+          };
+        }
+        return p;
+      })
+    );
+
+    // Update cart
+    setCartItems((prev) => {
+      const existing = prev.find(
+        (it) => it.productId === product.id && it.variantId === variant.id
+      );
+      if (existing) {
+        return prev.map((it) =>
+          it.productId === product.id && it.variantId === variant.id
+            ? { ...it, quantity: it.quantity + 1 }
+            : it
+        );
+      } else {
+        return [
+          ...prev,
+          {
+            productId: product.id,
+            variantId: variant.id,
+            title: product.title,
+            variantName: variant.name,
+            price: product.price + variant.priceDelta,
+            quantity: 1,
+            image: product.images[0],
+            reservationId: res.reservationId,
+            reservedUntil: res.expiresAt,
+          },
+        ];
+      }
+    });
+
+    setIsCartOpen(true);
+  };
+
+  const handleUpdateQuantity = (productId: string, variantId: string, delta: number) => {
+    setCartItems((prev) => {
+      return prev
+        .map((it) => {
+          if (it.productId === productId && it.variantId === variantId) {
+            const newQty = it.quantity + delta;
+            return newQty > 0 ? { ...it, quantity: newQty } : null;
+          }
+          return it;
+        })
+        .filter(Boolean) as CartItem[];
+    });
+  };
+
+  const handleRemoveItem = async (productId: string, variantId: string) => {
+    const item = cartItems.find((it) => it.productId === productId && it.variantId === variantId);
+    if (item?.reservationId) {
+      await StockReservationEngine.releaseReservation(item.reservationId);
+    }
+
+    setCartItems((prev) =>
+      prev.filter((it) => !(it.productId === productId && it.variantId === variantId))
+    );
+
+    // Restore local visual stock
+    setProducts((prev) =>
+      prev.map((p) => {
+        if (p.id === productId) {
+          return {
+            ...p,
+            stock: p.stock + (item?.quantity || 1),
+            reservedStock: Math.max(0, p.reservedStock - (item?.quantity || 1)),
+          };
+        }
+        return p;
+      })
+    );
+  };
+
+  // Coupon Engine
+  const handleApplyCoupon = (code: string): boolean => {
+    const clean = code.toUpperCase();
+    if (clean === 'VIP20') {
+      setAppliedCoupon({
+        code: 'VIP20',
+        type: 'PERCENTAGE',
+        value: 20,
+        expiry: '2026-12-31',
+      });
+      return true;
+    } else if (clean === 'SWIFT50') {
+      setAppliedCoupon({
+        code: 'SWIFT50',
+        type: 'FIXED',
+        value: 50,
+        expiry: '2026-12-31',
+      });
+      return true;
+    }
+    return false;
+  };
+
+  // Add Review
+  const handleAddReview = (productId: string, newReview: ReviewItem) => {
+    setProducts((prev) =>
+      prev.map((p) => {
+        if (p.id === productId) {
+          const updatedReviews = [newReview, ...p.reviews];
+          const newAvg = (
+            updatedReviews.reduce((sum, r) => sum + r.rating, 0) / updatedReviews.length
+          ).toFixed(2);
+          return {
+            ...p,
+            reviews: updatedReviews,
+            reviewCount: updatedReviews.length,
+            rating: Number(newAvg),
+          };
+        }
+        return p;
+      })
+    );
+  };
+
+  // Order Finalization
+  const handleOrderSuccess = (newOrder: OrderRecord) => {
+    setOrders((prev) => [newOrder, ...prev]);
+    setCartItems([]);
+    setAppliedCoupon(null);
+    setIsCheckoutOpen(false);
+    setIsCartOpen(false);
+    alert(`🎉 Order ${newOrder.orderNumber} successfully placed! View in Admin BI.`);
+  };
+
+  const flagshipProduct = products[0];
+
+  return (
+    <div className="min-h-screen bg-[#090B10] text-[#F8FAFC] flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+      {/* Floating Header */}
+      <Navbar
+        cartCount={cartItems.reduce((acc, it) => acc + it.quantity, 0)}
+        onOpenCart={() => setIsCartOpen(true)}
+        onOpenVisualSearch={() => setIsVisualSearchOpen(true)}
+        onOpenAIConcierge={() => setIsAIConciergeOpen(true)}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        currentView={currentView}
+        onToggleView={setCurrentView}
+      />
+
+      {/* Main View Router */}
+      <main className="flex-1">
+        {currentView === 'store' ? (
+          <>
+            {/* Live Flash Sale Concurrency Ticker */}
+            <FlashSaleBanner
+              flashProduct={flagshipProduct}
+              onQuickReserve={(p) => handleAddToCart(p, p.variants[0])}
+            />
+
+            {/* Hero Section with Interactive 3D Showcase */}
+            <HeroSection
+              flagshipProduct={flagshipProduct}
+              onExploreClick={() => {
+                const el = document.getElementById('catalog-section');
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              onQuickReserve={(p) => handleAddToCart(p, p.variants[0])}
+              onOpenInspectModal={(p) => setInspectProduct(p)}
+            />
+
+            {/* Faceted Catalog & Product Grid */}
+            <ProductCatalog
+              products={products}
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
+              searchQuery={searchQuery}
+              onAddToCart={handleAddToCart}
+              onInspect={(p) => setInspectProduct(p)}
+            />
+          </>
+        ) : (
+          /* Enterprise BI Dashboard */
+          <AdminDashboard
+            orders={orders}
+            products={products}
+            onBackToStore={() => setCurrentView('store')}
+          />
+        )}
+      </main>
+
+      {/* Modals & Slide-Overs */}
+      <ProductDetailModal
+        product={inspectProduct}
+        onClose={() => setInspectProduct(null)}
+        onAddToCart={handleAddToCart}
+        onAddReview={handleAddReview}
+      />
+
+      <AIVisualSearchModal
+        isOpen={isVisualSearchOpen}
+        onClose={() => setIsVisualSearchOpen(false)}
+        onSelectProduct={(p) => setInspectProduct(p)}
+      />
+
+      <AIConciergePalette
+        isOpen={isAIConciergeOpen}
+        onClose={() => setIsAIConciergeOpen(false)}
+        onSelectProduct={(p) => setInspectProduct(p)}
+      />
+
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+        onProceedToCheckout={() => {
+          setIsCartOpen(false);
+          setIsCheckoutOpen(true);
+        }}
+        appliedCoupon={appliedCoupon}
+        onApplyCoupon={handleApplyCoupon}
+        onRemoveCoupon={() => setAppliedCoupon(null)}
+      />
+
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        cartItems={cartItems}
+        appliedCoupon={appliedCoupon}
+        onOrderSuccess={handleOrderSuccess}
+      />
+
+      {/* Luxury Footer */}
+      <footer className="w-full border-t border-white/5 py-10 px-4 lg:px-8 bg-[#07090E] text-xs text-slate-400">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <span className="font-heading font-bold text-white text-base tracking-tight">
+              SWIFT<span className="text-cyan-400">SHELF</span>
+            </span>
+            <p className="text-[11px] text-slate-500 mt-1">
+              Engineered with Next.js 15, Redis 2-Phase Stock Locking, pgvector & Three.js
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-6 text-slate-400">
+            <span className="text-slate-300 font-semibold">Architect: Lovjyot Singh</span>
+            <span>•</span>
+            <button
+              onClick={() => setIsAIConciergeOpen(true)}
+              className="hover:text-cyan-300 transition-colors"
+            >
+              AI Concierge (Cmd+K)
+            </button>
+            <span>•</span>
+            <button
+              onClick={() => setCurrentView(currentView === 'store' ? 'admin' : 'store')}
+              className="hover:text-cyan-300 transition-colors"
+            >
+              {currentView === 'store' ? 'Admin BI Dashboard' : 'Storefront'}
+            </button>
+          </div>
+
+          <div className="text-[11px] text-slate-500 font-mono">
+            &copy; 2026 SwiftShelf Inc. All Rights Reserved.
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

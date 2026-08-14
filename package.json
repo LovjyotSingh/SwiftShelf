@@ -1,0 +1,41 @@
+{
+  "name": "swiftshelf-ecommerce",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SwiftShelf - AI-Augmented, High-Concurrency E-Commerce Platform with 2-Phase Stock Locking, 3D WebGL Customizer, and Real-Time BI",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "seed": "tsx src/scripts/seed.ts",
+    "simulate:flashsale": "tsx src/scripts/simulate-flash-sale.ts"
+  },
+  "dependencies": {
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "lucide-react": "^0.468.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.5",
+    "zod": "^3.23.8",
+    "canvas-confetti": "^1.9.3",
+    "@prisma/client": "^5.22.0",
+    "ioredis": "^5.4.1",
+    "stripe": "^17.4.0",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/jspdf": "^2.0.0",
+    "typescript": "^5.7.2",
+    "prisma": "^5.22.0",
+    "tsx": "^4.19.2"
+  }
+}

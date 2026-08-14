@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: swiftshelf-app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://swiftshelf_user:swiftshelf_pass@postgres:5432/swiftshelf_db?schema=public
+      - REDIS_URL=redis://redis:6379
+      - NEXTAUTH_SECRET=docker_secure_secret_swiftshelf_key
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: swiftshelf-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: swiftshelf_user
+      POSTGRES_PASSWORD: swiftshelf_pass
+      POSTGRES_DB: swiftshelf_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: swiftshelf-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:
