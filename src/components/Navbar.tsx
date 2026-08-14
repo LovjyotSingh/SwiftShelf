@@ -1,21 +1,24 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ShoppingBag,
   Search,
   Camera,
   Sparkles,
-  ShieldCheck,
   Zap,
   BarChart3,
   Command,
+  User as UserIcon,
 } from 'lucide-react';
-import { formatCurrency } from '@/lib/utils';
 import { ProductCategory } from '@/types';
+import { UserSession } from './AuthModal';
 
 interface NavbarProps {
   cartCount: number;
+  user: UserSession | null;
+  onOpenAuth: () => void;
+  onOpenAccount: () => void;
   onOpenCart: () => void;
   onOpenVisualSearch: () => void;
   onOpenAIConcierge: () => void;
@@ -29,6 +32,9 @@ interface NavbarProps {
 
 export default function Navbar({
   cartCount,
+  user,
+  onOpenAuth,
+  onOpenAccount,
   onOpenCart,
   onOpenVisualSearch,
   onOpenAIConcierge,
@@ -39,17 +45,8 @@ export default function Navbar({
   currentView,
   onToggleView,
 }: NavbarProps) {
-  const categories: Array<ProductCategory | 'ALL'> = [
-    'ALL',
-    'Audio',
-    'Wearables',
-    'Computing',
-    'Ergonomics',
-    'Smart Living',
-  ];
-
   return (
-    <header className="sticky top-0 z-40 w-full px-4 lg:px-8 py-3 glass-panel border-b border-white/5 bg-[#090B10]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 w-full px-4 lg:px-8 py-3.5 glass-panel border-b border-white/5 bg-[#090B10]/85 backdrop-blur-xl transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         {/* Brand Logo */}
         <div
@@ -110,8 +107,36 @@ export default function Navbar({
           </button>
         </div>
 
-        {/* Right: Mode Switcher & Cart */}
-        <div className="flex items-center gap-3">
+        {/* Right Controls: User Profile + Mode Switcher + Cart */}
+        <div className="flex items-center gap-2.5">
+          {/* User Auth / Account Trigger */}
+          {user ? (
+            <button
+              onClick={onOpenAccount}
+              className="flex items-center gap-2 p-1.5 pr-3 rounded-xl bg-slate-900/90 border border-white/15 hover:border-indigo-400 transition-all text-xs text-slate-200"
+            >
+              <img
+                src={
+                  user.avatar ||
+                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'
+                }
+                alt="avatar"
+                className="w-6 h-6 rounded-lg object-cover bg-slate-950"
+              />
+              <span className="font-semibold hidden sm:inline truncate max-w-[90px]">
+                {user.name.split(' ')[0]}
+              </span>
+            </button>
+          ) : (
+            <button
+              onClick={onOpenAuth}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 border border-white/10 hover:border-indigo-400 text-slate-200 hover:text-white text-xs font-semibold transition-all"
+            >
+              <UserIcon className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Sign In</span>
+            </button>
+          )}
+
           {/* Admin BI Dashboard Toggle */}
           <button
             onClick={() => onToggleView(currentView === 'store' ? 'admin' : 'store')}
@@ -122,7 +147,9 @@ export default function Navbar({
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5 text-cyan-400" />
-            <span className="hidden sm:inline">{currentView === 'admin' ? 'Storefront' : 'Admin BI'}</span>
+            <span className="hidden sm:inline">
+              {currentView === 'admin' ? 'Storefront' : 'Admin BI'}
+            </span>
           </button>
 
           {/* Cart Trigger */}

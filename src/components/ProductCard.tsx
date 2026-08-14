@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Star, ShieldCheck, Box, Eye, ShoppingBag, Sparkles, Check } from 'lucide-react';
+import { Star, ShieldCheck, Box, Eye, ShoppingBag, Sparkles, Check, ImageOff } from 'lucide-react';
 import { Product, ProductVariant } from '@/types';
 import { formatCurrency } from '@/lib/utils';
 
@@ -15,6 +15,7 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(product.variants[0]);
   const [isAdding, setIsAdding] = useState(false);
   const [isImageHovered, setIsImageHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const handleAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -26,6 +27,8 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
   const currentPrice = product.price + selectedVariant.priceDelta;
   const isLowStock = product.stock <= 10;
 
+  const currentImageSrc = isImageHovered && product.images[1] ? product.images[1] : product.images[0];
+
   return (
     <div
       onClick={() => onInspect(product)}
@@ -33,16 +36,24 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
     >
       {/* Product Image & Badges Container */}
       <div
-        className="relative w-full h-56 rounded-xl bg-slate-950/80 overflow-hidden mb-4 flex items-center justify-center"
+        className="relative w-full h-56 rounded-xl bg-slate-950 overflow-hidden mb-4 flex items-center justify-center"
         onMouseEnter={() => setIsImageHovered(true)}
         onMouseLeave={() => setIsImageHovered(false)}
       >
-        <img
-          src={isImageHovered && product.images[1] ? product.images[1] : product.images[0]}
-          alt={product.title}
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
-        />
+        {!imageError && currentImageSrc ? (
+          <img
+            src={currentImageSrc}
+            alt={product.title}
+            onError={() => setImageError(true)}
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-slate-900 to-indigo-950/40 flex flex-col items-center justify-center text-slate-500 space-y-2">
+            <Box className="w-10 h-10 text-cyan-400" />
+            <span className="text-xs font-semibold text-slate-400">{product.title}</span>
+          </div>
+        )}
 
         {/* Badge */}
         {product.badge && (

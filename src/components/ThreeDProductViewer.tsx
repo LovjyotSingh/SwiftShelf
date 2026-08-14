@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { RotateCw, ZoomIn, ZoomOut, Sparkles, Layers, Eye } from 'lucide-react';
+import { RotateCw, ZoomIn, ZoomOut, Sparkles, Eye } from 'lucide-react';
 
 interface ThreeDProductViewerProps {
   productType?: string;
@@ -14,14 +14,34 @@ export default function ThreeDProductViewer({
   selectedColor = '#121316',
   className = '',
 }: ThreeDProductViewerProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [rotation, setRotation] = useState({ x: 15, y: 35 });
   const [zoom, setZoom] = useState(1);
   const [isAutoRotate, setIsAutoRotate] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const dragStart = useRef({ x: 0, y: 0 });
 
+  // IntersectionObserver to pause rendering when scrolled out of view for 60+ FPS performance
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     let animationFrameId: number;
 
     const render = () => {
@@ -37,7 +57,7 @@ export default function ThreeDProductViewer({
 
       ctx.clearRect(0, 0, width, height);
 
-      // Radial ambient lighting backdrop
+      // Ambient lighting backdrop
       const radialGlow = ctx.createRadialGradient(centerX, centerY, 10, centerX, centerY, width / 1.5);
       radialGlow.addColorStop(0, 'rgba(99, 102, 241, 0.15)');
       radialGlow.addColorStop(0.5, 'rgba(6, 182, 212, 0.05)');
@@ -47,17 +67,14 @@ export default function ThreeDProductViewer({
 
       // Auto rotation increment
       if (isAutoRotate && !isDragging) {
-        setRotation((prev) => ({ ...prev, y: (prev.y + 0.6) % 360 }));
+        setRotation((prev) => ({ ...prev, y: (prev.y + 0.5) % 360 }));
       }
 
       const radY = (rotation.y * Math.PI) / 180;
       const radX = (rotation.x * Math.PI) / 180;
       const cosY = Math.cos(radY);
       const sinY = Math.sin(radY);
-      const cosX = Math.cos(radX);
       const sinX = Math.sin(radX);
-
-      const scale = 110 * zoom;
 
       ctx.save();
       ctx.translate(centerX, centerY);
@@ -73,7 +90,6 @@ export default function ThreeDProductViewer({
       // 3D Model Rendering based on product category
       if (productType.includes('watch')) {
         // --- 3D SMARTWATCH ---
-        // Watch Case Cylinder / Bezel
         ctx.save();
         ctx.rotate(radX * 0.3);
 
@@ -107,7 +123,6 @@ export default function ThreeDProductViewer({
           ctx.fillStyle = '#34D399';
           ctx.fillText('⚡ 72 BPM | 98% O2', 0, 15 * zoom);
 
-          // Circular progress ring
           ctx.beginPath();
           ctx.arc(0, 0, 50 * zoom, 0, 1.4 * Math.PI);
           ctx.strokeStyle = '#818CF8';
@@ -123,7 +138,6 @@ export default function ThreeDProductViewer({
         ctx.restore();
       } else if (productType.includes('chair')) {
         // --- 3D ERGONOMIC CHAIR ---
-        // Backrest Spine
         ctx.save();
         ctx.rotate(radY * 0.2);
 
@@ -161,8 +175,7 @@ export default function ThreeDProductViewer({
 
         ctx.restore();
       } else {
-        // --- 3D AUDIOPHILE HEADPHONES (Default Flagship) ---
-        // Headband Arch
+        // --- 3D AUDIOPHILE HEADPHONES ---
         ctx.beginPath();
         ctx.arc(0, -20 * zoom, 80 * zoom, Math.PI * 0.9, Math.PI * 2.1);
         ctx.lineWidth = 14 * zoom;
@@ -170,21 +183,20 @@ export default function ThreeDProductViewer({
         ctx.strokeStyle = '#0F172A';
         ctx.stroke();
 
-        // Inner Comfort Leather Cushion
+        // Cushion
         ctx.beginPath();
         ctx.arc(0, -20 * zoom, 76 * zoom, Math.PI * 0.95, Math.PI * 2.05);
         ctx.lineWidth = 6 * zoom;
         ctx.strokeStyle = selectedColor;
         ctx.stroke();
 
-        // Left Ear Cup 3D projection
+        // Left Cup
         const leftX = (-80 + sinY * 25) * zoom;
         const leftY = (15 + cosY * 10) * zoom;
         ctx.save();
         ctx.translate(leftX, leftY);
         ctx.rotate(-0.15 + sinX * 0.2);
 
-        // Cup body
         ctx.beginPath();
         ctx.ellipse(0, 0, 28 * zoom, 42 * zoom, 0, 0, Math.PI * 2);
         const gradL = ctx.createLinearGradient(-30, -30, 30, 30);
@@ -197,7 +209,6 @@ export default function ThreeDProductViewer({
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
         ctx.stroke();
 
-        // Acoustic Chamfer Ring
         ctx.beginPath();
         ctx.ellipse(0, 0, 16 * zoom, 26 * zoom, 0, 0, Math.PI * 2);
         ctx.strokeStyle = '#6366F1';
@@ -205,7 +216,7 @@ export default function ThreeDProductViewer({
         ctx.stroke();
         ctx.restore();
 
-        // Right Ear Cup 3D projection
+        // Right Cup
         const rightX = (80 + sinY * 25) * zoom;
         const rightY = (15 - cosY * 10) * zoom;
         ctx.save();
@@ -242,9 +253,8 @@ export default function ThreeDProductViewer({
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [rotation, zoom, isAutoRotate, isDragging, productType, selectedColor]);
+  }, [rotation, zoom, isAutoRotate, isDragging, productType, selectedColor, isVisible]);
 
-  // Mouse & Touch Drag Handlers
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     dragStart.current = { x: e.clientX, y: e.clientY };
@@ -268,32 +278,30 @@ export default function ThreeDProductViewer({
 
   return (
     <div
-      className={`relative w-full h-[360px] md:h-[440px] rounded-2xl glass-panel overflow-hidden flex items-center justify-center select-none ${className}`}
+      ref={containerRef}
+      className={`relative w-full h-[340px] md:h-[420px] rounded-2xl glass-panel overflow-hidden flex items-center justify-center select-none ${className}`}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
-      {/* 3D Canvas */}
       <canvas
         ref={canvasRef}
         width={600}
-        height={440}
+        height={420}
         className="w-full h-full cursor-grab active:cursor-grabbing"
       />
 
-      {/* Floating 3D Badges & Controls */}
       <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/80 border border-white/10 backdrop-blur-md text-xs font-medium text-slate-300">
         <Sparkles className="w-3.5 h-3.5 text-indigo-400 animate-spin" style={{ animationDuration: '6s' }} />
-        <span>Interactive 3D WebGL Mesh</span>
+        <span>Interactive 3D WebGL</span>
       </div>
 
-      <div className="absolute bottom-4 left-4 flex items-center gap-2 text-xs text-slate-400 bg-slate-950/60 px-3 py-1.5 rounded-lg border border-white/5">
+      <div className="absolute bottom-4 left-4 flex items-center gap-2 text-xs text-slate-400 bg-slate-950/70 px-3 py-1.5 rounded-lg border border-white/5">
         <Eye className="w-3.5 h-3.5 text-slate-400" />
         <span>Drag to orbit 360°</span>
       </div>
 
-      {/* Control Buttons */}
       <div className="absolute bottom-4 right-4 flex items-center gap-2">
         <button
           onClick={(e) => {

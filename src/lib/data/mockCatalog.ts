@@ -14,13 +14,13 @@ export const INITIAL_PRODUCTS: Product[] = [
     reviewCount: 328,
     badge: 'FLASH SALE',
     isFlashSale: true,
-    flashSaleEndsAt: new Date(Date.now() + 1000 * 60 * 60 * 14).toISOString(), // 14 hours remaining
+    flashSaleEndsAt: new Date(Date.now() + 1000 * 60 * 60 * 14).toISOString(),
     stock: 24,
     reservedStock: 6,
     images: [
-      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=1000&q=80',
     ],
     model3dUrl: 'headphones',
     tags: ['audio', 'wireless', 'anc', 'headphones', 'music', 'studio', 'bluetooth', 'black', 'silver'],
@@ -68,11 +68,10 @@ export const INITIAL_PRODUCTS: Product[] = [
       ],
       cons: [
         'Slightly heavier than standard plastic headphones',
-        'Carrying case is somewhat bulky',
       ],
       sentimentScore: 96,
       fitRecommendation: 'True to fit. Perfect clamp force for medium to large head profiles.',
-      summaryText: 'Spectre Pro is unanimously praised for studio-grade acoustic clarity and robust titanium build, making it the top audiophile choice of 2026.',
+      summaryText: 'Spectre Pro is unanimously praised for studio-grade acoustic clarity and robust titanium build.',
     },
     reviews: [
       {
@@ -90,7 +89,7 @@ export const INITIAL_PRODUCTS: Product[] = [
         userName: 'Elena Rostova',
         rating: 5,
         title: 'ANC completely deletes airline cabin noise',
-        comment: 'Fleed from London to Tokyo and the battery barely dropped 20%. The transparency mode sounds completely natural.',
+        comment: 'Flight from London to Tokyo and the battery barely dropped 20%. The transparency mode sounds completely natural.',
         verifiedPurchase: true,
         date: '2026-08-02',
         helpfulCount: 19,
@@ -112,8 +111,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 18,
     reservedStock: 3,
     images: [
-      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&w=1000&q=80',
     ],
     model3dUrl: 'watch',
     tags: ['watch', 'smartwatch', 'fitness', 'titanium', 'wearables', 'health', 'gps'],
@@ -194,8 +194,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 12,
     reservedStock: 2,
     images: [
-      'https://images.unsplash.com/photo-1580481077195-c9906d445c71?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1580481077195-c9906d445c71?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?auto=format&fit=crop&w=1000&q=80',
     ],
     model3dUrl: 'chair',
     tags: ['chair', 'ergonomic', 'office', 'furniture', 'desk', 'lumbar', 'mesh'],
@@ -253,7 +253,7 @@ export const INITIAL_PRODUCTS: Product[] = [
         userName: 'Sarah Jenkins',
         rating: 5,
         title: 'Cured my chronic lower back fatigue in 2 weeks',
-        comment: 'I was hesitant about the price tag, but after 8 hours of coding my posture feels refreshed. The lumbar support moves naturally with you.',
+        comment: 'I was hesitant about the price tag, but after 8 hours of coding my posture feels refreshed.',
         verifiedPurchase: true,
         date: '2026-07-15',
         helpfulCount: 54,
@@ -275,8 +275,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 9,
     reservedStock: 1,
     images: [
-      'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=1000&q=80',
     ],
     model3dUrl: 'monitor',
     tags: ['monitor', 'display', '6k', 'oled', 'computing', 'thunderbolt', 'screen'],
@@ -296,7 +296,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     variants: [
       {
         id: 'var_04_standard',
-        name: 'Standard Glass',
+        name: 'Space Gray',
         sku: 'LUM-6K-STD',
         colorName: 'Space Gray',
         colorHex: '#3A3A3C',
@@ -306,7 +306,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       },
       {
         id: 'var_04_nano',
-        name: 'Nano-Texture Matte Glass',
+        name: 'Matte Silver',
         sku: 'LUM-6K-NANO',
         colorName: 'Matte Silver',
         colorHex: '#E5E5EA',
@@ -319,7 +319,6 @@ export const INITIAL_PRODUCTS: Product[] = [
       pros: [
         'Infinite black levels and staggering 6K sharpness',
         'Thunderbolt 5 hub eliminates desk dongles completely',
-        'Zero text fringing on macOS and Windows',
       ],
       cons: [
         'Requires high-end GPU for native 6K 120Hz rendering',
@@ -355,8 +354,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 30,
     reservedStock: 5,
     images: [
-      'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=1000&q=80',
     ],
     tags: ['keyboard', 'mechanical', 'hall effect', 'rapid trigger', 'gaming', 'typing', 'aluminum'],
     features: [
@@ -375,7 +374,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     variants: [
       {
         id: 'var_05_retro',
-        name: 'Cyber Gray / Teal',
+        name: 'Cyber Gray',
         sku: 'MTX-65-CYB',
         colorName: 'Cyber Gray',
         colorHex: '#48484A',
@@ -397,15 +396,14 @@ export const INITIAL_PRODUCTS: Product[] = [
     aiSummary: {
       pros: [
         'Deep "thocky" sound acoustics right out of the box',
-        'Rapid trigger makes typing and competitive gaming feel instantaneous',
-        'Super heavy aluminum chassis never slips on desk',
+        'Rapid trigger makes typing and gaming feel instantaneous',
       ],
       cons: [
         'Heavy to carry in a backpack',
       ],
       sentimentScore: 97,
-      fitRecommendation: 'Compact 65% size saves maximum desk real estate for mouse movements.',
-      summaryText: 'Matrix 65 is celebrated for its incredible acoustic foam tuning and responsive hall-effect switches.',
+      fitRecommendation: 'Compact 65% size saves maximum desk real estate.',
+      summaryText: 'Matrix 65 is celebrated for its acoustic foam tuning and responsive hall-effect switches.',
     },
     reviews: [
       {
@@ -413,7 +411,7 @@ export const INITIAL_PRODUCTS: Product[] = [
         userName: 'Liam Chen',
         rating: 5,
         title: 'The acoustic profile is pure satisfying butter',
-        comment: 'No rattling stabs, pure marble thock sound. The web configurator for setting per-key actuation depth is top tier.',
+        comment: 'No rattling stabs, pure marble thock sound. The web configurator is top tier.',
         verifiedPurchase: true,
         date: '2026-07-20',
         helpfulCount: 39,
@@ -434,8 +432,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 22,
     reservedStock: 2,
     images: [
-      'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=1000&q=80',
     ],
     tags: ['lamp', 'lightbar', 'ambient', 'desk', 'circadian', 'smart living', 'minimalist'],
     features: [
@@ -454,7 +452,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     variants: [
       {
         id: 'var_06_black',
-        name: 'Matte Anodized Black',
+        name: 'Matte Black',
         sku: 'HALO-LMP-BLK',
         colorName: 'Matte Black',
         colorHex: '#1C1C1E',
@@ -477,14 +475,13 @@ export const INITIAL_PRODUCTS: Product[] = [
       pros: [
         'Completely eliminates screen reflections and eye fatigue',
         'Wireless tactile knob feels exceptionally high-end',
-        'Sleek minimal footprint clamps onto any monitor thickness',
       ],
       cons: [
         'Requires dedicated 5V/2A USB-C port',
       ],
       sentimentScore: 93,
-      fitRecommendation: 'Fits monitors with thickness between 0.5cm to 4.5cm, including curved screens.',
-      summaryText: 'Aura Halo enhances workspace aesthetics while significantly easing eye fatigue during late night sessions.',
+      fitRecommendation: 'Fits monitors with thickness between 0.5cm to 4.5cm.',
+      summaryText: 'Aura Halo enhances workspace aesthetics while significantly easing eye fatigue.',
     },
     reviews: [
       {
@@ -492,10 +489,167 @@ export const INITIAL_PRODUCTS: Product[] = [
         userName: 'Rachel Foster',
         rating: 5,
         title: 'Eye strain vanished on day one',
-        comment: 'The wireless controller on my desk is so satisfying to twist. Colors render so vibrantly on my desk notes.',
+        comment: 'The wireless controller on my desk is so satisfying to twist.',
         verifiedPurchase: true,
         date: '2026-08-08',
         helpfulCount: 16,
+      },
+    ],
+  },
+  {
+    id: 'prod_07_apex_mouse',
+    title: 'Apex Ultra Wireless Precision Mouse',
+    slug: 'apex-ultra-wireless-precision-mouse',
+    subtitle: '42,000 DPI Optical Sensor with Magnesium Alloy Exoskeleton',
+    description: 'Ultra-lightweight 49-gram magnesium alloy chassis, 8000Hz polling rate wireless receiver, optical microswitches with zero debounce delay, and 120-hour battery life.',
+    price: 139.0,
+    originalPrice: 169.0,
+    category: 'Accessories',
+    rating: 4.88,
+    reviewCount: 165,
+    badge: 'NEW RELEASE',
+    stock: 25,
+    reservedStock: 4,
+    images: [
+      'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=1000&q=80',
+    ],
+    tags: ['mouse', 'wireless', 'gaming', 'ergonomic', 'accessories', 'magnesium'],
+    features: [
+      'Ultra-Lightweight 49g Magnesium Alloy Shell',
+      'Flawless 42K DPI Gen-3 Optical Sensor',
+      '8000Hz Ultra-Fast Wireless Polling',
+      '100M Click Rated Optical Switches',
+      '100% Virgin Grade PTFE Glides',
+    ],
+    specs: {
+      'Weight': '49 grams',
+      'Sensor': 'SwiftTrack 42K Optical',
+      'Battery Life': '120 Hours (1000Hz) / 40 Hours (8000Hz)',
+      'Connectivity': '2.4GHz HyperSpeed / Bluetooth 5.4 / USB-C',
+    },
+    variants: [
+      {
+        id: 'var_07_carbon',
+        name: 'Carbon Black',
+        sku: 'APX-MOU-BLK',
+        colorName: 'Carbon Black',
+        colorHex: '#121214',
+        priceDelta: 0,
+        stock: 15,
+        reservedStock: 2,
+      },
+      {
+        id: 'var_07_frost',
+        name: 'Frost White',
+        sku: 'APX-MOU-WHT',
+        colorName: 'Frost White',
+        colorHex: '#F8FAFC',
+        priceDelta: 10,
+        stock: 10,
+        reservedStock: 2,
+      },
+    ],
+    aiSummary: {
+      pros: [
+        'Staggeringly light at 49 grams with zero structural flex',
+        '8000Hz sensor tracking feels glued to your hand movements',
+      ],
+      cons: [
+        'Higher power consumption in 8000Hz mode',
+      ],
+      sentimentScore: 97,
+      fitRecommendation: 'Ideal for claw and fingertip grip styles across all hand sizes.',
+      summaryText: 'The definitive featherlight precision mouse for competitive gaming and high-speed workflows.',
+    },
+    reviews: [
+      {
+        id: 'rev_08',
+        userName: 'Viktor Meyer',
+        rating: 5,
+        title: 'Precision is completely unmatched',
+        comment: 'The magnesium chassis feels so rigid and premium. 8000Hz on a 240Hz monitor is a revelation.',
+        verifiedPurchase: true,
+        date: '2026-08-04',
+        helpfulCount: 28,
+      },
+    ],
+  },
+  {
+    id: 'prod_08_pulse_buds',
+    title: 'Pulse ANC Titanium Earbuds',
+    slug: 'pulse-anc-titanium-earbuds',
+    subtitle: 'Dual Micro-Planar Drivers with Spatial Spatial Audio & Head Tracking',
+    description: 'Micro-planar magnetic drivers paired with dynamic subwoofers in an aerospace titanium charging case. Delivers 52dB deep hybrid noise cancellation and personalized 3D spatial soundscapes.',
+    price: 249.0,
+    originalPrice: 289.0,
+    category: 'Audio',
+    rating: 4.82,
+    reviewCount: 210,
+    stock: 28,
+    reservedStock: 3,
+    images: [
+      'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?auto=format&fit=crop&w=1000&q=80',
+    ],
+    tags: ['earbuds', 'audio', 'wireless', 'anc', 'spatial', 'titanium', 'bluetooth'],
+    features: [
+      'Dual Hybrid Micro-Planar + Dynamic Acoustic Architecture',
+      '52dB Adaptive Active Noise Cancellation',
+      'Real-Time Gyro Head Tracking Spatial Audio',
+      'Wireless Qi Fast Charging Case with Titanium Inlay',
+      '42-Hour Total Battery (9h on single charge)',
+    ],
+    specs: {
+      'Drivers': '6mm Micro-Planar + 11mm Dynamic Sub',
+      'Codecs': 'LDAC, LHDC 5.0, AAC, SBC',
+      'Water Resistance': 'IP55 Sweat & Rain Resistance',
+      'Case Charging': 'USB-C + Qi Wireless Charging',
+    },
+    variants: [
+      {
+        id: 'var_08_titan',
+        name: 'Raw Titanium',
+        sku: 'PLS-BUD-TTN',
+        colorName: 'Titanium Gray',
+        colorHex: '#64748B',
+        priceDelta: 0,
+        stock: 18,
+        reservedStock: 2,
+      },
+      {
+        id: 'var_08_matteblack',
+        name: 'Midnight Black',
+        sku: 'PLS-BUD-BLK',
+        colorName: 'Midnight Black',
+        colorHex: '#0F172A',
+        priceDelta: 0,
+        stock: 10,
+        reservedStock: 1,
+      },
+    ],
+    aiSummary: {
+      pros: [
+        'Audiophile grade separation with crystalline highs',
+        'Spatial audio with head tracking creates a genuine 3D theatre soundstage',
+      ],
+      cons: [
+        'Case is slightly heavier due to real metal construction',
+      ],
+      sentimentScore: 95,
+      fitRecommendation: 'Includes 5 sizes of medical-grade hypoallergenic silicone tips.',
+      summaryText: 'Pulse ANC sets a new standard for true wireless in-ear fidelity and noise suppression.',
+    },
+    reviews: [
+      {
+        id: 'rev_09',
+        userName: 'Chloe Bennett',
+        rating: 5,
+        title: 'Finally true audiophile sound in tiny earbuds',
+        comment: 'Bass is tight and deep, never muddy. ANC is on par with over-ear flagships.',
+        verifiedPurchase: true,
+        date: '2026-08-09',
+        helpfulCount: 24,
       },
     ],
   },

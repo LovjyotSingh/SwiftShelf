@@ -11,6 +11,8 @@ import AIConciergePalette from '@/components/AIConciergePalette';
 import CartDrawer from '@/components/CartDrawer';
 import CheckoutModal from '@/components/CheckoutModal';
 import AdminDashboard from '@/components/AdminDashboard';
+import AuthModal, { UserSession } from '@/components/AuthModal';
+import UserAccountModal from '@/components/UserAccountModal';
 import { INITIAL_PRODUCTS } from '@/lib/data/mockCatalog';
 import {
   Product,
@@ -28,7 +30,18 @@ export default function SwiftShelfApp() {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentView, setCurrentView] = useState<'store' | 'admin'>('store');
 
+  // Authentication State (Default demo logged-in user)
+  const [currentUser, setCurrentUser] = useState<UserSession | null>({
+    id: 'usr_alex_01',
+    name: 'Alex Rivera',
+    email: 'alex.rivera@techluxury.io',
+    role: 'CUSTOMER',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+  });
+
   // Modals & Drawers
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isVisualSearchOpen, setIsVisualSearchOpen] = useState(false);
   const [isAIConciergeOpen, setIsAIConciergeOpen] = useState(false);
@@ -42,13 +55,13 @@ export default function SwiftShelfApp() {
     {
       id: 'ord_init_01',
       orderNumber: 'SWIFT-948201',
-      customerName: 'Marcus Vance',
-      customerEmail: 'marcus.v@sounddesign.io',
+      customerName: 'Alex Rivera',
+      customerEmail: 'alex.rivera@techluxury.io',
       shippingAddress: {
-        street: '42 Audio Way',
-        city: 'Seattle',
-        state: 'WA',
-        zip: '98101',
+        street: '500 Howard Street, Suite 400',
+        city: 'San Francisco',
+        state: 'CA',
+        zip: '94105',
         country: 'USA',
       },
       items: [
@@ -122,7 +135,6 @@ export default function SwiftShelfApp() {
     let reservationId = `res_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     let expiresAt = Date.now() + 600 * 1000;
 
-    // Optional API call to Server Redis Lock Endpoint
     try {
       const res = await fetch('/api/inventory/reserve', {
         method: 'POST',
@@ -139,10 +151,10 @@ export default function SwiftShelfApp() {
         if (data.expiresAt) expiresAt = data.expiresAt;
       }
     } catch (e) {
-      // Graceful fallback to client reservation
+      // Safe fallback
     }
 
-    // Decrement local visual stock
+    // Decrement visual local stock
     setProducts((prev) =>
       prev.map((p) => {
         if (p.id === product.id) {
@@ -281,21 +293,31 @@ export default function SwiftShelfApp() {
 
   // Order Finalization
   const handleOrderSuccess = (newOrder: OrderRecord) => {
-    setOrders((prev) => [newOrder, ...prev]);
+    // Attach current user name and email
+    const orderWithUser: OrderRecord = {
+      ...newOrder,
+      customerName: currentUser?.name || newOrder.customerName,
+      customerEmail: currentUser?.email || newOrder.customerEmail,
+    };
+
+    setOrders((prev) => [orderWithUser, ...prev]);
     setCartItems([]);
     setAppliedCoupon(null);
     setIsCheckoutOpen(false);
     setIsCartOpen(false);
-    alert(`🎉 Order ${newOrder.orderNumber} successfully placed! View in Admin BI.`);
+    alert(`🎉 Order ${orderWithUser.orderNumber} placed! You can view invoices in Account or Admin BI.`);
   };
 
   const flagshipProduct = products[0];
 
   return (
     <div className="min-h-screen bg-[#090B10] text-[#F8FAFC] flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
-      {/* Floating Header */}
+      {/* Floating Header with User Auth */}
       <Navbar
         cartCount={cartItems.reduce((acc, it) => acc + it.quantity, 0)}
+        user={currentUser}
+        onOpenAuth={() => setIsAuthOpen(true)}
+        onOpenAccount={() => setIsAccountOpen(true)}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenVisualSearch={() => setIsVisualSearchOpen(true)}
         onOpenAIConcierge={() => setIsAIConciergeOpen(true)}
@@ -348,7 +370,29 @@ export default function SwiftShelfApp() {
         )}
       </main>
 
-      {/* Modals & Slide-Overs */}
+      {/* Auth Modal (Sign In / Sign Up) */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        onLoginSuccess={(user) => {
+          setCurrentUser(user);
+          if (user.role === 'ADMIN') {
+            setCurrentView('admin');
+          }
+        }}
+      />
+
+      {/* User Account Profile & Past Orders Modal */}
+      <UserAccountModal
+        isOpen={isAccountOpen}
+        onClose={() => setIsAccountOpen(false)}
+        user={currentUser}
+        orders={orders}
+        onLogout={() => setCurrentUser(null)}
+        onOpenAdmin={() => setCurrentView('admin')}
+      />
+
+      {/* Product Detail Inspect Modal */}
       <ProductDetailModal
         product={inspectProduct}
         onClose={() => setInspectProduct(null)}
@@ -356,18 +400,21 @@ export default function SwiftShelfApp() {
         onAddReview={handleAddReview}
       />
 
+      {/* AI Visual Search Modal */}
       <AIVisualSearchModal
         isOpen={isVisualSearchOpen}
         onClose={() => setIsVisualSearchOpen(false)}
         onSelectProduct={(p) => setInspectProduct(p)}
       />
 
+      {/* AI Concierge Palette (Cmd+K) */}
       <AIConciergePalette
         isOpen={isAIConciergeOpen}
         onClose={() => setIsAIConciergeOpen(false)}
         onSelectProduct={(p) => setInspectProduct(p)}
       />
 
+      {/* Cart Drawer */}
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
@@ -383,6 +430,7 @@ export default function SwiftShelfApp() {
         onRemoveCoupon={() => setAppliedCoupon(null)}
       />
 
+      {/* Checkout Modal */}
       <CheckoutModal
         isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
