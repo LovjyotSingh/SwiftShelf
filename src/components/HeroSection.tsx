@@ -6,16 +6,13 @@ import {
   Zap,
   ShieldCheck,
   Cpu,
-  Layers,
   ChevronRight,
   Sliders,
   CheckCircle2,
-  Box,
   Image as ImageIcon,
   Activity,
   Headphones,
 } from 'lucide-react';
-import ThreeDProductViewer from './ThreeDProductViewer';
 import { Product } from '@/types';
 import { formatCurrency } from '@/lib/utils';
 
@@ -32,10 +29,8 @@ export default function HeroSection({
   onQuickReserve,
   onOpenInspectModal,
 }: HeroSectionProps) {
-  const [selectedColorHex, setSelectedColorHex] = useState(
-    flagshipProduct.variants[0]?.colorHex || '#121316'
-  );
-  const [viewMode, setViewMode] = useState<'photo' | '3d'>('photo');
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
+  const currentVariant = flagshipProduct.variants[selectedVariantIndex] || flagshipProduct.variants[0];
 
   return (
     <section className="relative w-full pt-6 pb-16 px-4 lg:px-8 overflow-hidden">
@@ -60,73 +55,74 @@ export default function HeroSection({
             </span>
           </h1>
 
-          {/* Subtitle */}
           <p className="text-base sm:text-lg text-slate-300 max-w-2xl font-light leading-relaxed">
-            Experience high-velocity luxury hardware with{' '}
-            <strong className="text-white font-medium">atomic flash-sale stock reservation</strong>,{' '}
-            multimodal visual AI search, and real-time 3D WebGL material customization.
+            Experience ultra-low latency e-commerce engineered for high-concurrency flash sales. Atomic
+            inventory reservation, verified sub-millisecond stock safety, and AI-assisted catalog intelligence.
           </p>
 
-          {/* Core Feature Highlights */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-            <div className="p-3 rounded-xl glass-card border border-white/5 space-y-1">
-              <div className="flex items-center gap-1.5 text-cyan-400 font-bold text-xs">
-                <Zap className="w-3.5 h-3.5" />
-                <span>&lt;15ms p95</span>
+          {/* Technical USP Highlights */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+            <div className="p-3.5 rounded-xl bg-slate-900/60 border border-white/5 backdrop-blur-md flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0">
+                <Zap className="w-4 h-4" />
               </div>
-              <p className="text-[11px] text-slate-400">Atomic MongoDB / Prisma</p>
+              <div>
+                <h4 className="text-xs font-bold text-white">Sub-ms Locking</h4>
+                <p className="text-[11px] text-slate-400">Redis 2-Phase atomic reservations</p>
+              </div>
             </div>
 
-            <div className="p-3 rounded-xl glass-card border border-white/5 space-y-1">
-              <div className="flex items-center gap-1.5 text-emerald-400 font-bold text-xs">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Zero Oversell</span>
+            <div className="p-3.5 rounded-xl bg-slate-900/60 border border-white/5 backdrop-blur-md flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 shrink-0">
+                <Sparkles className="w-4 h-4" />
               </div>
-              <p className="text-[11px] text-slate-400">10-Min Redis Lua TTL Locks</p>
+              <div>
+                <h4 className="text-xs font-bold text-white">AI Catalog</h4>
+                <p className="text-[11px] text-slate-400">Gemini-powered semantic visual match</p>
+              </div>
             </div>
 
-            <div className="p-3 rounded-xl glass-card border border-white/5 space-y-1 col-span-2 sm:col-span-1">
-              <div className="flex items-center gap-1.5 text-purple-400 font-bold text-xs">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Multimodal AI</span>
+            <div className="p-3.5 rounded-xl bg-slate-900/60 border border-white/5 backdrop-blur-md flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 shrink-0">
+                <ShieldCheck className="w-4 h-4" />
               </div>
-              <p className="text-[11px] text-slate-400">Gemini 1.5 Flash + Vision</p>
+              <div>
+                <h4 className="text-xs font-bold text-white">ACID Resilient</h4>
+                <p className="text-[11px] text-slate-400">Zero overselling guaranteed</p>
+              </div>
             </div>
           </div>
 
-          {/* Action CTAs */}
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          {/* CTA Group */}
+          <div className="flex flex-wrap items-center gap-4 pt-4">
             <button
               onClick={() => onQuickReserve(flagshipProduct)}
-              className="btn-luxury-primary px-6 py-3.5 rounded-xl font-bold text-sm flex items-center gap-2 text-white shadow-xl"
+              className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-sm shadow-xl shadow-indigo-500/25 active:scale-95 transition-all flex items-center gap-2"
             >
               <span>Instant Reserve Flagship</span>
-              <span className="bg-white/20 text-white px-2 py-0.5 rounded text-xs font-mono">
-                {formatCurrency(flagshipProduct.price)}
-              </span>
+              <ChevronRight className="w-4 h-4" />
             </button>
 
             <button
               onClick={onExploreClick}
-              className="btn-luxury-secondary px-5 py-3.5 rounded-xl font-semibold text-sm flex items-center gap-2 hover:text-cyan-300 transition-all"
+              className="px-6 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-white/10 text-slate-200 hover:text-white font-semibold text-sm backdrop-blur-md transition-all"
             >
-              <span>Browse Catalog</span>
-              <ChevronRight className="w-4 h-4" />
+              Explore Full Catalog (8 Items)
             </button>
           </div>
         </div>
 
-        {/* Right Column: Featured Hardware Showcase Card */}
-        <div className="lg:col-span-5 space-y-4">
-          <div className="relative glass-card rounded-3xl p-5 border border-white/10 shadow-2xl bg-gradient-to-b from-slate-900/90 to-[#0B0E17]/95">
+        {/* Right Column: Flagship Hardware Studio Spotlight */}
+        <div className="lg:col-span-5 relative">
+          <div className="glass-card rounded-3xl p-5 border border-white/10 relative overflow-hidden bg-slate-900/60 shadow-2xl">
             {/* Header info */}
             <div className="flex items-center justify-between pb-3 border-b border-white/5">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-bold tracking-wider uppercase text-cyan-400">
-                    FEATURED FLAGSHIP
+                  <span className="text-[11px] font-bold text-cyan-400 uppercase tracking-widest">
+                    FLAGSHIP SPOTLIGHT
                   </span>
-                  <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] font-bold">
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold">
                     🔥 24 Left
                   </span>
                 </div>
@@ -136,95 +132,54 @@ export default function HeroSection({
               </div>
               <div className="text-right">
                 <div className="text-lg font-extrabold text-white">
-                  {formatCurrency(flagshipProduct.price)}
+                  {formatCurrency(flagshipProduct.price + currentVariant.priceDelta)}
                 </div>
                 {flagshipProduct.originalPrice && (
                   <div className="text-xs text-slate-400 line-through">
-                    {formatCurrency(flagshipProduct.originalPrice)}
+                    {formatCurrency(flagshipProduct.originalPrice + currentVariant.priceDelta)}
                   </div>
                 )}
               </div>
             </div>
 
-            {/* View Mode Switcher: Photo vs 3D */}
-            <div className="mt-3 flex items-center justify-between">
-              <div className="flex bg-slate-950/80 p-1 rounded-xl border border-white/10 text-xs font-semibold">
-                <button
-                  onClick={() => setViewMode('photo')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
-                    viewMode === 'photo'
-                      ? 'bg-indigo-600 text-white shadow-md'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <ImageIcon className="w-3.5 h-3.5" />
-                  <span>Studio Photo</span>
-                </button>
-
-                <button
-                  onClick={() => setViewMode('3d')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
-                    viewMode === '3d'
-                      ? 'bg-indigo-600 text-white shadow-md'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <Box className="w-3.5 h-3.5 text-cyan-300" />
-                  <span>3D Interactive</span>
-                </button>
-              </div>
-
-              <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
-                50mm Planar Magnetic
-              </span>
-            </div>
-
             {/* Showcase Visual Area */}
-            <div className="my-3 relative rounded-2xl overflow-hidden bg-slate-950 border border-white/5 h-[320px] flex items-center justify-center">
-              {viewMode === 'photo' ? (
-                <div className="relative w-full h-full group">
-                  <img
-                    src={flagshipProduct.images[0]}
-                    alt={flagshipProduct.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-white">
-                          Acoustic Planar Transducers
-                        </span>
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-mono">
-                          LDAC 24-Bit
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-slate-300 line-clamp-1">
-                        Ultra-low latency active noise cancellation with 60h battery life
-                      </p>
-                    </div>
+            <div className="my-4 relative rounded-2xl overflow-hidden bg-slate-950 border border-white/5 h-[320px] flex items-center justify-center group cursor-pointer"
+                 onClick={() => onOpenInspectModal(flagshipProduct)}>
+              <img
+                src={flagshipProduct.images[0]}
+                alt={flagshipProduct.title}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                loading="eager"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex items-end p-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-white">
+                      50mm Planar Transducers
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-mono">
+                      LDAC 24-Bit
+                    </span>
                   </div>
+                  <p className="text-[11px] text-slate-300 line-clamp-1">
+                    Custom planar magnetic architecture with active hybrid noise cancellation
+                  </p>
                 </div>
-              ) : (
-                <ThreeDProductViewer
-                  productType={flagshipProduct.model3dUrl || 'headphones'}
-                  productImage={flagshipProduct.images[0]}
-                  selectedColor={selectedColorHex}
-                />
-              )}
+              </div>
             </div>
 
             {/* Color Swatch Material Switcher */}
-            <div className="pt-2 flex items-center justify-between">
+            <div className="pt-1 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-400 font-medium">Finishes:</span>
+                <span className="text-xs text-slate-400 font-medium">Finish:</span>
                 <div className="flex items-center gap-2">
-                  {flagshipProduct.variants.map((v) => (
+                  {flagshipProduct.variants.map((v, idx) => (
                     <button
                       key={v.id}
-                      onClick={() => setSelectedColorHex(v.colorHex)}
+                      onClick={() => setSelectedVariantIndex(idx)}
                       className={`w-6 h-6 rounded-full border-2 transition-all ${
-                        selectedColorHex === v.colorHex
+                        selectedVariantIndex === idx
                           ? 'border-cyan-400 scale-110 shadow-md shadow-cyan-500/30'
                           : 'border-white/20 hover:border-white/50'
                       }`}
@@ -233,6 +188,9 @@ export default function HeroSection({
                     />
                   ))}
                 </div>
+                <span className="text-xs text-slate-300 font-medium">
+                  {currentVariant.colorName}
+                </span>
               </div>
 
               <button

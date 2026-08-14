@@ -66,8 +66,8 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
 
         {/* Inspect Trigger Overlay */}
         <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/90 backdrop-blur-md border border-white/10 text-cyan-300 text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity shadow-md">
-          <Box className="w-3 h-3 text-cyan-400" />
-          <span>Interactive View</span>
+          <Eye className="w-3 h-3 text-cyan-400" />
+          <span>Quick Inspect</span>
         </div>
 
         {/* Stock Level Bar */}

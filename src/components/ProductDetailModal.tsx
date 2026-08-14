@@ -6,13 +6,11 @@ import {
   Star,
   ShieldCheck,
   Zap,
-  Box,
-  Image as ImageIcon,
   Check,
   ShoppingBag,
   Sparkles,
+  Layers,
 } from 'lucide-react';
-import ThreeDProductViewer from './ThreeDProductViewer';
 import ReviewSection from './ReviewSection';
 import { Product, ProductVariant, ReviewItem } from '@/types';
 import { formatCurrency } from '@/lib/utils';
@@ -33,7 +31,6 @@ export default function ProductDetailModal({
   if (!product) return null;
 
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(product.variants[0]);
-  const [activeMediaTab, setActiveMediaTab] = useState<'3d' | 'gallery'>('3d');
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
 
@@ -44,6 +41,8 @@ export default function ProductDetailModal({
     onAddToCart(product, selectedVariant);
     setTimeout(() => setIsLocked(false), 900);
   };
+
+  const activeImage = product.images[selectedImageIndex] || product.images[0];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
@@ -56,83 +55,56 @@ export default function ProductDetailModal({
           <X className="w-5 h-5" />
         </button>
 
-        {/* Top Grid: Media (3D or Photos) & Details */}
+        {/* Top Grid: High-Res Gallery & Details */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Left Column: Interactive Media Showcase */}
-          <div className="lg:col-span-7 space-y-3">
-            {/* Media Mode Tabs */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setActiveMediaTab('3d')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
-                  activeMediaTab === '3d'
-                    ? 'bg-indigo-600 border-indigo-400 text-white'
-                    : 'bg-slate-900 border-white/10 text-slate-400 hover:text-white'
-                }`}
-              >
-                <Box className="w-3.5 h-3.5" />
-                <span>Interactive 3D Mesh</span>
-              </button>
+          {/* Left Column: High-Res Photography Gallery */}
+          <div className="lg:col-span-7 space-y-4">
+            {/* Main Stage Image */}
+            <div className="w-full h-[360px] md:h-[430px] rounded-2xl bg-slate-950/90 overflow-hidden flex items-center justify-center border border-white/10 relative group shadow-xl">
+              <img
+                src={activeImage}
+                alt={product.title}
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = '/images/products/chair.svg';
+                }}
+                className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                loading="eager"
+              />
 
-              <button
-                onClick={() => setActiveMediaTab('gallery')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
-                  activeMediaTab === 'gallery'
-                    ? 'bg-indigo-600 border-indigo-400 text-white'
-                    : 'bg-slate-900 border-white/10 text-slate-400 hover:text-white'
-                }`}
-              >
-                <ImageIcon className="w-3.5 h-3.5" />
-                <span>High-Res Gallery</span>
-              </button>
+              {/* Category Pill */}
+              <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-900/90 border border-white/10 text-cyan-400 text-xs font-semibold backdrop-blur-md">
+                {product.category}
+              </div>
             </div>
 
-            {/* Media Content */}
-            {activeMediaTab === '3d' ? (
-              <ThreeDProductViewer
-                productType={product.model3dUrl || 'headphones'}
-                productImage={product.images[selectedImageIndex] || product.images[0]}
-                selectedColor={selectedVariant.colorHex}
-              />
-            ) : (
-              <div className="space-y-3">
-                <div className="w-full h-[360px] md:h-[440px] rounded-2xl bg-slate-950 overflow-hidden flex items-center justify-center border border-white/5">
+            {/* Thumbnail Navigation */}
+            <div className="flex items-center gap-3">
+              {product.images.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setSelectedImageIndex(idx)}
+                  className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all p-1 bg-slate-950 ${
+                    selectedImageIndex === idx
+                      ? 'border-cyan-400 scale-105 shadow-md shadow-cyan-500/30'
+                      : 'border-white/10 opacity-60 hover:opacity-100'
+                  }`}
+                >
                   <img
-                    src={product.images[selectedImageIndex] || product.images[0]}
-                    alt={product.title}
+                    src={img}
+                    alt="thumb"
                     referrerPolicy="no-referrer"
                     onError={(e) => {
                       e.currentTarget.onerror = null;
                       e.currentTarget.src = '/images/products/chair.svg';
                     }}
-                    className="w-full h-full object-contain p-4"
+                    className="w-full h-full object-contain"
                     loading="eager"
                   />
-                </div>
-                <div className="flex items-center gap-2">
-                  {product.images.map((img, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setSelectedImageIndex(idx)}
-                      className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
-                        selectedImageIndex === idx ? 'border-cyan-400 scale-105' : 'border-white/10 opacity-60'
-                      }`}
-                    >
-                      <img
-                        src={img}
-                        alt="thumb"
-                        referrerPolicy="no-referrer"
-                        onError={(e) => {
-                          e.currentTarget.src = product.images[0];
-                        }}
-                        className="w-full h-full object-cover"
-                        loading="eager"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Right Column: Spec Selector & Actions */}
@@ -178,107 +150,115 @@ export default function ProductDetailModal({
                 {product.description}
               </p>
 
-              {/* Variant Selector */}
-              <div className="space-y-2 pt-2">
-                <label className="block text-xs font-semibold text-slate-300">
-                  Select Finish & Material:
+              {/* Variant / Finish Options */}
+              <div className="space-y-2 pt-2 border-t border-white/5">
+                <label className="text-xs font-semibold text-slate-300 flex items-center justify-between">
+                  <span>Selected Finish:</span>
+                  <span className="text-cyan-400">{selectedVariant.name}</span>
                 </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="flex items-center gap-2">
                   {product.variants.map((v) => (
                     <button
                       key={v.id}
                       onClick={() => setSelectedVariant(v)}
-                      className={`p-2.5 rounded-xl border text-left flex items-center gap-2 transition-all ${
+                      className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-medium transition-all ${
                         selectedVariant.id === v.id
-                          ? 'border-cyan-400 bg-indigo-950/40 text-white shadow-md shadow-cyan-500/20'
+                          ? 'border-cyan-400 bg-cyan-950/40 text-white'
                           : 'border-white/10 bg-slate-900/60 text-slate-400 hover:text-white'
                       }`}
                     >
                       <span
-                        className="w-4 h-4 rounded-full border border-white/20"
+                        className="w-3.5 h-3.5 rounded-full border border-white/20"
                         style={{ backgroundColor: v.colorHex }}
                       />
-                      <div className="truncate">
-                        <div className="text-xs font-bold truncate">{v.colorName}</div>
-                        <div className="text-[10px] text-slate-400">
-                          {v.priceDelta > 0 ? `+$${v.priceDelta}` : 'Standard'}
-                        </div>
-                      </div>
+                      <span>{v.name}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Key Features List */}
-              <div className="pt-2 space-y-1.5">
-                <span className="text-xs font-semibold text-slate-300">Hardware Highlights:</span>
-                <ul className="space-y-1 text-xs text-slate-400">
-                  {product.features.map((feat, i) => (
-                    <li key={i} className="flex items-start gap-1.5">
+              <div className="space-y-1.5 pt-2 border-t border-white/5">
+                <span className="text-xs font-semibold text-slate-300">Engineering Specs:</span>
+                <ul className="space-y-1 text-xs text-slate-300">
+                  {product.features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2">
                       <Zap className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
-                      <span>{feat}</span>
+                      <span>{f}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             </div>
 
-            {/* Lock Stock CTA Button */}
+            {/* Lock Stock Action Button */}
             <div className="pt-4 border-t border-white/10 space-y-2">
-              <div className="flex items-center justify-between text-xs text-slate-400">
-                <span>Inventory Pool:</span>
-                <span className="text-emerald-400 font-mono font-bold">
-                  {product.stock} units available (Instant Lock)
-                </span>
-              </div>
-
               <button
                 onClick={handleLock}
-                disabled={isLocked}
-                className={`w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
+                disabled={isLocked || product.stock === 0}
+                className={`w-full py-3.5 rounded-xl font-bold text-sm shadow-xl flex items-center justify-center gap-2 transition-all ${
                   isLocked
                     ? 'bg-emerald-600 text-white'
-                    : 'btn-luxury-primary shadow-lg shadow-indigo-600/40 active:scale-98'
+                    : 'bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white active:scale-98'
                 }`}
               >
                 {isLocked ? (
                   <>
                     <Check className="w-4 h-4" />
-                    <span>Inventory Locked (10-Min TTL)</span>
+                    <span>Locked in Redis Engine!</span>
                   </>
                 ) : (
                   <>
                     <ShoppingBag className="w-4 h-4" />
-                    <span>Lock In Cart ({formatCurrency(currentPrice)})</span>
+                    <span>Lock Stock & Add to Cart • {formatCurrency(currentPrice)}</span>
                   </>
                 )}
               </button>
+              <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Guaranteed against overselling via 2-Phase Redis Engine</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Technical Specs Table */}
-        {product.specs && (
-          <div className="border-t border-white/10 pt-6 space-y-3">
-            <h4 className="font-heading text-sm font-bold text-white uppercase tracking-wider">
-              Technical Specifications
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              {Object.entries(product.specs).map(([key, val]) => (
-                <div key={key} className="p-3 rounded-xl bg-slate-950/60 border border-white/5 text-xs">
-                  <div className="text-slate-400 font-medium">{key}</div>
-                  <div className="text-white font-semibold mt-0.5">{val}</div>
-                </div>
-              ))}
+        {/* AI Sentiment Analysis Card */}
+        {product.aiSummary && (
+          <div className="p-4 rounded-2xl bg-slate-900/60 border border-white/5 space-y-2">
+            <div className="flex items-center gap-2 text-xs font-bold text-indigo-400">
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <span>Gemini AI Sentiment & Fit Insights</span>
+            </div>
+            <p className="text-xs text-slate-300 italic">{product.aiSummary.summaryText}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs pt-1">
+              <div className="space-y-1">
+                <span className="text-emerald-400 font-semibold">Pros:</span>
+                {product.aiSummary.pros.map((p, i) => (
+                  <div key={i} className="text-slate-300 text-[11px]">
+                    • {p}
+                  </div>
+                ))}
+              </div>
+              <div className="space-y-1">
+                <span className="text-rose-400 font-semibold">Considerations:</span>
+                {product.aiSummary.cons.map((c, i) => (
+                  <div key={i} className="text-slate-300 text-[11px]">
+                    • {c}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
 
-        {/* Reviews & AI Synthesis Section */}
-        <ReviewSection
-          product={product}
-          onAddReview={(rev) => onAddReview(product.id, rev)}
-        />
+        {/* Product Reviews */}
+        <div className="pt-4 border-t border-white/10">
+          <ReviewSection
+            productId={product.id}
+            reviews={product.reviews || []}
+            onAddReview={onAddReview}
+          />
+        </div>
       </div>
     </div>
   );
