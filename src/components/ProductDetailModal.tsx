@@ -15,7 +15,7 @@ import { formatCurrency } from '@/lib/utils';
 import ReviewSection from './ReviewSection';
 
 interface ProductDetailModalProps {
-  product: Product;
+  product: Product | null;
   onClose: () => void;
   onAddToCart: (product: Product, variant: ProductVariant) => void;
   onAddReview: (productId: string, review: Omit<Review, 'id' | 'createdAt'>) => void;
@@ -27,15 +27,18 @@ export default function ProductDetailModal({
   onAddToCart,
   onAddReview,
 }: ProductDetailModalProps) {
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(product.variants[0]);
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
 
-  const currentPrice = product.price + selectedVariant.priceDelta;
+  if (!product) return null;
+
+  const activeVariant = selectedVariant || product.variants[0];
+  const currentPrice = product.price + activeVariant.priceDelta;
 
   const handleLock = () => {
     setIsLocked(true);
-    onAddToCart(product, selectedVariant);
+    onAddToCart(product, activeVariant);
     setTimeout(() => setIsLocked(false), 900);
   };
 
@@ -151,7 +154,7 @@ export default function ProductDetailModal({
               <div className="space-y-2 pt-2 border-t border-inherit">
                 <label className="text-xs font-semibold flex items-center justify-between">
                   <span>Selected Finish:</span>
-                  <span className="text-cyan-400 font-bold">{selectedVariant.name}</span>
+                  <span className="text-cyan-400 font-bold">{activeVariant.name}</span>
                 </label>
                 <div className="flex items-center gap-2">
                   {product.variants.map((v) => (
@@ -159,7 +162,7 @@ export default function ProductDetailModal({
                       key={v.id}
                       onClick={() => setSelectedVariant(v)}
                       className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-medium transition-all ${
-                        selectedVariant.id === v.id
+                        activeVariant.id === v.id
                           ? 'border-cyan-400 luxury-badge font-bold scale-105'
                           : 'border-inherit opacity-70 hover:opacity-100'
                       }`}
