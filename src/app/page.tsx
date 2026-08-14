@@ -112,6 +112,21 @@ export default function SwiftShelfApp() {
     },
   ]);
 
+  // Restore saved login session (Remember Me check)
+  useEffect(() => {
+    try {
+      const savedLocal = localStorage.getItem('swiftshelf_user_session');
+      const savedSession = sessionStorage.getItem('swiftshelf_user_session');
+      if (savedLocal) {
+        setCurrentUser(JSON.parse(savedLocal));
+      } else if (savedSession) {
+        setCurrentUser(JSON.parse(savedSession));
+      }
+    } catch (err) {
+      console.warn('Session restoration error:', err);
+    }
+  }, []);
+
   // Global Cmd+K Keyboard Shortcut for AI Concierge
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -367,8 +382,19 @@ export default function SwiftShelfApp() {
       <AuthModal
         isOpen={isAuthOpen}
         onClose={() => setIsAuthOpen(false)}
-        onLoginSuccess={(user) => {
+        onLoginSuccess={(user, remember) => {
           setCurrentUser(user);
+          try {
+            if (remember) {
+              localStorage.setItem('swiftshelf_user_session', JSON.stringify(user));
+              sessionStorage.removeItem('swiftshelf_user_session');
+            } else {
+              sessionStorage.setItem('swiftshelf_user_session', JSON.stringify(user));
+              localStorage.removeItem('swiftshelf_user_session');
+            }
+          } catch (err) {
+            console.warn('Could not save session:', err);
+          }
           if (user.role === 'ADMIN') {
             setCurrentView('admin');
           }
@@ -381,7 +407,13 @@ export default function SwiftShelfApp() {
         onClose={() => setIsAccountOpen(false)}
         user={currentUser}
         orders={orders}
-        onLogout={() => setCurrentUser(null)}
+        onLogout={() => {
+          setCurrentUser(null);
+          try {
+            localStorage.removeItem('swiftshelf_user_session');
+            sessionStorage.removeItem('swiftshelf_user_session');
+          } catch (err) {}
+        }}
         onOpenAdmin={() => setCurrentView('admin')}
       />
 
