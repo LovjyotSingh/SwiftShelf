@@ -1,4 +1,4 @@
-// SwiftShelf Database Schema - MongoDB Atlas Connector
+// SwiftShelf Database Schema - Clean MongoDB Atlas Connector
 generator client {
   provider = "prisma-client-js"
 }
@@ -36,8 +36,6 @@ model User {
   orders       Order[]
   reviews      Review[]
   reservations InventoryReservation[]
-
-  @@index([role])
 }
 
 model Category {
@@ -78,10 +76,6 @@ model Product {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@index([categoryId])
-  @@index([isFlashSale])
-  @@index([rating])
 }
 
 model ProductVariant {
@@ -98,8 +92,6 @@ model ProductVariant {
 
   reservations InventoryReservation[]
   orderItems   OrderItem[]
-
-  @@index([productId])
 }
 
 model InventoryReservation {
@@ -114,9 +106,6 @@ model InventoryReservation {
   expiresAt DateTime
   isClaimed Boolean         @default(false)
   createdAt DateTime        @default(now())
-
-  @@index([expiresAt])
-  @@index([productId])
 }
 
 model Order {
@@ -139,10 +128,6 @@ model Order {
   items     OrderItem[]
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
-
-  @@index([customerEmail])
-  @@index([status])
-  @@index([idempotencyKey])
 }
 
 model OrderItem {
@@ -156,9 +141,6 @@ model OrderItem {
   quantity   Int
   unitPrice  Float
   totalPrice Float
-
-  @@index([orderId])
-  @@index([productId])
 }
 
 model Review {
@@ -174,8 +156,6 @@ model Review {
   verifiedPurchase Boolean  @default(true)
   helpfulCount     Int      @default(0)
   createdAt        DateTime @default(now())
-
-  @@index([productId])
 }
 
 model ProcessedWebhook {
@@ -184,6 +164,4 @@ model ProcessedWebhook {
   eventType String
   payload   Json
   createdAt DateTime @default(now())
-
-  @@index([eventId])
 }
