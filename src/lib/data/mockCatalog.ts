@@ -18,7 +18,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 24,
     reservedStock: 6,
     images: [
-      '/images/products/headphones.svg',
+      '/images/products/headphones.jpg',
       'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800&auto=format&fit=crop&q=80',
     ],
     model3dUrl: 'headphones',
@@ -100,8 +100,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 18,
     reservedStock: 3,
     images: [
-      '/images/products/watch.svg',
-      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=80',
+      '/images/products/watch.jpg',
+      'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&auto=format&fit=crop&q=80',
     ],
     model3dUrl: 'watch',
     tags: ['watch', 'smartwatch', 'fitness', 'titanium', 'wearables', 'health', 'gps'],
@@ -182,7 +182,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 12,
     reservedStock: 2,
     images: [
-      '/images/products/chair.svg',
+      '/images/products/chair.jpg',
       'https://images.unsplash.com/photo-1580481077195-c9906d445c71?w=800&auto=format&fit=crop&q=80',
     ],
     model3dUrl: 'chair',
@@ -263,8 +263,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 9,
     reservedStock: 1,
     images: [
-      '/images/products/monitor.svg',
-      'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop&q=80',
+      '/images/products/monitor.jpg',
+      'https://images.unsplash.com/photo-1547082299-de196ea013d6?w=800&auto=format&fit=crop&q=80',
     ],
     model3dUrl: 'monitor',
     tags: ['monitor', 'display', '6k', 'oled', 'computing', 'thunderbolt', 'screen'],
@@ -342,8 +342,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 30,
     reservedStock: 5,
     images: [
-      '/images/products/keyboard.svg',
-      'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80',
+      '/images/products/keyboard.jpg',
+      'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800&auto=format&fit=crop&q=80',
     ],
     model3dUrl: 'keyboard',
     tags: ['keyboard', 'mechanical', 'hall effect', 'rapid trigger', 'gaming', 'typing', 'aluminum'],
@@ -421,8 +421,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 22,
     reservedStock: 2,
     images: [
-      '/images/products/lamp.svg',
-      'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&auto=format&fit=crop&q=80',
+      '/images/products/lamp.jpg',
+      'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&auto=format&fit=crop&q=80',
     ],
     model3dUrl: 'lamp',
     tags: ['lamp', 'lightbar', 'ambient', 'desk', 'circadian', 'smart living', 'minimalist'],
@@ -501,8 +501,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 25,
     reservedStock: 4,
     images: [
-      '/images/products/mouse.svg',
-      'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&auto=format&fit=crop&q=80',
+      '/images/products/mouse.jpg',
+      'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&auto=format&fit=crop&q=80',
     ],
     model3dUrl: 'mouse',
     tags: ['mouse', 'wireless', 'gaming', 'ergonomic', 'accessories', 'magnesium'],
@@ -580,8 +580,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 28,
     reservedStock: 3,
     images: [
-      '/images/products/earbuds.svg',
-      'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80',
+      '/images/products/earbuds.jpg',
+      'https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=800&auto=format&fit=crop&q=80',
     ],
     model3dUrl: 'earbuds',
     tags: ['earbuds', 'audio', 'wireless', 'anc', 'spatial', 'titanium', 'bluetooth'],

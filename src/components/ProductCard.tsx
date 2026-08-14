@@ -45,7 +45,7 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
               e.currentTarget.src = '/images/products/chair.svg';
             }
           }}
-          className="w-full h-full object-contain p-2 object-center group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
           loading="eager"
         />
 

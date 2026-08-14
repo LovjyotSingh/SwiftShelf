@@ -69,7 +69,7 @@ export default function ProductDetailModal({
                   e.currentTarget.onerror = null;
                   e.currentTarget.src = '/images/products/chair.svg';
                 }}
-                className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="eager"
               />
 
@@ -85,7 +85,7 @@ export default function ProductDetailModal({
                 <button
                   key={idx}
                   onClick={() => setSelectedImageIndex(idx)}
-                  className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all p-1 bg-slate-950 ${
+                  className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-slate-950 ${
                     selectedImageIndex === idx
                       ? 'border-cyan-400 scale-105 shadow-md shadow-cyan-500/30'
                       : 'border-white/10 opacity-60 hover:opacity-100'
@@ -99,7 +99,7 @@ export default function ProductDetailModal({
                       e.currentTarget.onerror = null;
                       e.currentTarget.src = '/images/products/chair.svg';
                     }}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                     loading="eager"
                   />
                 </button>
