@@ -19,7 +19,7 @@
   --app-card-bg: rgba(10, 10, 10, 0.85);
   --app-card-border: rgba(255, 255, 255, 0.14);
   --app-card-border-hover: rgba(255, 255, 255, 0.45);
-  --app-header-bg: rgba(0, 0, 0, 0.85);
+  --app-header-bg: rgba(0, 0, 0, 0.88);
   --app-footer-bg: #000000;
   --app-button-bg: #ffffff;
   --app-button-text: #000000;
@@ -35,10 +35,10 @@ html[data-theme='light'] {
   --app-bg: #ffffff;
   --app-text: #090d16;
   --app-text-muted: #475569;
-  --app-card-bg: rgba(255, 255, 255, 0.9);
+  --app-card-bg: rgba(255, 255, 255, 0.92);
   --app-card-border: rgba(15, 23, 42, 0.12);
   --app-card-border-hover: rgba(15, 23, 42, 0.35);
-  --app-header-bg: rgba(255, 255, 255, 0.88);
+  --app-header-bg: rgba(255, 255, 255, 0.92);
   --app-footer-bg: #f8fafc;
   --app-button-bg: #090d16;
   --app-button-text: #ffffff;
@@ -57,7 +57,7 @@ html[data-theme='cyber'] {
   --app-card-bg: rgba(6, 24, 48, 0.85);
   --app-card-border: rgba(56, 189, 248, 0.35);
   --app-card-border-hover: rgba(52, 211, 153, 0.6);
-  --app-header-bg: rgba(3, 14, 30, 0.85);
+  --app-header-bg: rgba(3, 14, 30, 0.88);
   --app-footer-bg: rgba(3, 14, 30, 0.95);
   --app-button-bg: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #34d399 100%);
   --app-button-text: #020617;
@@ -68,9 +68,24 @@ html[data-theme='cyber'] {
   --app-badge-border: rgba(56, 189, 248, 0.35);
 }
 
+html[data-theme='dark'], html[data-theme='dark'] body {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+html[data-theme='light'], html[data-theme='light'] body {
+  background: #ffffff !important;
+  color: #090d16 !important;
+}
+
+html[data-theme='cyber'], html[data-theme='cyber'] body {
+  background: linear-gradient(135deg, #030712 0%, #0c4a6e 40%, #2e1065 75%, #064e3b 100%) !important;
+  background-attachment: fixed !important;
+  color: #ffffff !important;
+}
+
 html {
   scroll-behavior: smooth;
-  background: var(--app-bg);
 }
 
 * {
@@ -81,9 +96,6 @@ html {
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--app-bg);
-  background-attachment: fixed;
-  color: var(--app-text);
   overflow-x: hidden;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;

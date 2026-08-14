@@ -18,6 +18,9 @@ export default function ThemeSelector() {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    if (typeof document !== 'undefined' && document.body) {
+      document.body.setAttribute('data-theme', theme);
+    }
     try {
       localStorage.setItem('swiftshelf_theme', theme);
     } catch (e) {}

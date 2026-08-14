@@ -23,8 +23,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="antialiased flex flex-col min-h-screen relative">
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('swiftshelf_theme') || 'dark';
+                  document.documentElement.setAttribute('data-theme', saved);
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="antialiased flex flex-col min-h-screen relative" suppressHydrationWarning>
         <CyberBackground />
         <main className="flex-1 relative z-10">{children}</main>
         <Footer />

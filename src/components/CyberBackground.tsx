@@ -23,12 +23,12 @@ export default function CyberBackground() {
     window.addEventListener('resize', handleResize);
 
     // Dynamic Star Particles
-    const particleCount = Math.min(40, Math.floor(width / 35));
+    const particleCount = Math.min(45, Math.floor(width / 30));
     const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
       radius: Math.random() * 2 + 1,
       alpha: Math.random() * 0.6 + 0.2,
       pulse: Math.random() * Math.PI,
@@ -57,9 +57,9 @@ export default function CyberBackground() {
           20,
           width * 0.5,
           height * 0.15,
-          width * 0.7
+          width * 0.75
         );
-        radial.addColorStop(0, 'rgba(15, 23, 42, 0.04)');
+        radial.addColorStop(0, 'rgba(15, 23, 42, 0.05)');
         radial.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.fillStyle = radial;
         ctx.fillRect(0, 0, width, height);
@@ -75,15 +75,15 @@ export default function CyberBackground() {
           const currentAlpha = p.alpha + Math.sin(p.pulse) * 0.15;
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(15, 23, 42, ${Math.max(0.08, currentAlpha * 0.35)})`;
+          ctx.fillStyle = `rgba(15, 23, 42, ${Math.max(0.1, currentAlpha * 0.4)})`;
           ctx.fill();
         }
       } else if (currentTheme === 'cyber') {
         // Aurora Gradient Mesh (Deep Indigo ➔ Cyan ➔ Emerald)
         const linearGrad = ctx.createLinearGradient(0, 0, width, height);
         linearGrad.addColorStop(0, '#030712');
-        linearGrad.addColorStop(0.4, '#0c4a6e');
-        linearGrad.addColorStop(0.75, '#2e1065');
+        linearGrad.addColorStop(0.35, '#0c4a6e');
+        linearGrad.addColorStop(0.7, '#2e1065');
         linearGrad.addColorStop(1, '#064e3b');
         ctx.fillStyle = linearGrad;
         ctx.fillRect(0, 0, width, height);
@@ -96,8 +96,8 @@ export default function CyberBackground() {
           height * 0.25,
           width * 0.75
         );
-        radial.addColorStop(0, 'rgba(56, 189, 248, 0.18)');
-        radial.addColorStop(0.5, 'rgba(16, 185, 129, 0.12)');
+        radial.addColorStop(0, 'rgba(56, 189, 248, 0.22)');
+        radial.addColorStop(0.5, 'rgba(16, 185, 129, 0.15)');
         radial.addColorStop(1, 'rgba(3, 7, 18, 0)');
         ctx.fillStyle = radial;
         ctx.fillRect(0, 0, width, height);
@@ -137,7 +137,7 @@ export default function CyberBackground() {
           height * 0.15,
           width * 0.65
         );
-        radial.addColorStop(0, 'rgba(255, 255, 255, 0.07)');
+        radial.addColorStop(0, 'rgba(255, 255, 255, 0.08)');
         radial.addColorStop(0.6, 'rgba(255, 255, 255, 0.02)');
         radial.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = radial;
@@ -169,8 +169,18 @@ export default function CyberBackground() {
 
     animationFrameId = requestAnimationFrame(render);
 
+    // Watch for DOM data-theme changes to trigger immediate re-render
+    const observer = new MutationObserver(() => {
+      render(performance.now());
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+
     return () => {
       window.removeEventListener('resize', handleResize);
+      observer.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -178,7 +188,7 @@ export default function CyberBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-95 transition-opacity duration-500"
+      className="fixed inset-0 pointer-events-none z-0 opacity-100 transition-opacity duration-300"
       style={{ willChange: 'transform' }}
     />
   );
