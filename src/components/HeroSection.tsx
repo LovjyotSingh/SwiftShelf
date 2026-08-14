@@ -33,20 +33,20 @@ export default function HeroSection({
         {/* Left Column: Headlines, Architecture Pills & Value Prop */}
         <div className="lg:col-span-7 space-y-6">
           {/* Engineering Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full luxury-badge text-xs font-semibold shadow-md">
-            <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Next.js 15 App Router • Redis 2-Phase Stock Locks • Gemini AI</span>
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full luxury-badge text-[10px] sm:text-xs font-semibold shadow-md max-w-full flex-wrap leading-tight">
+            <Cpu className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+            <span className="truncate max-w-[280px] sm:max-w-none">Next.js 15 App Router • Redis 2-Phase Locks • Gemini AI</span>
           </div>
 
           {/* Main Headline with Shimmering Metallic Text */}
-          <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
+          <h1 className="font-heading text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] break-words">
             <span className="shiny-text">Next-Gen Hardware.</span>{' '}
             <span className="opacity-80">
               Zero Race Conditions.
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg opacity-85 max-w-2xl font-light leading-relaxed">
+          <p className="text-sm sm:text-lg opacity-85 max-w-2xl font-light leading-relaxed">
             Experience ultra-low latency e-commerce engineered for high-concurrency flash sales. Atomic
             inventory reservation, verified sub-millisecond stock safety, and AI-assisted catalog intelligence.
           </p>
@@ -85,10 +85,10 @@ export default function HeroSection({
           </div>
 
           {/* CTA Group */}
-          <div className="flex flex-wrap items-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-4">
             <button
               onClick={() => onQuickReserve(flagshipProduct)}
-              className="luxury-button px-7 py-3.5 text-sm flex items-center gap-2"
+              className="luxury-button w-full sm:w-auto px-7 py-3.5 text-sm flex items-center justify-center gap-2"
             >
               <span>Instant Reserve Flagship</span>
               <ChevronRight className="w-4 h-4" />
@@ -96,7 +96,7 @@ export default function HeroSection({
 
             <button
               onClick={onExploreClick}
-              className="luxury-button-secondary px-6 py-3.5 text-sm"
+              className="luxury-button-secondary w-full sm:w-auto px-6 py-3.5 text-sm justify-center"
             >
               Explore Full Catalog (8 Items)
             </button>

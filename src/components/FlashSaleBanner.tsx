@@ -35,18 +35,18 @@ export default function FlashSaleBanner({ flashProduct, onQuickReserve }: FlashS
   const percentageReserved = Math.round((flashProduct.reservedStock / totalStock) * 100);
 
   return (
-    <div className="w-full border-b border-inherit bg-current/5 py-2.5 px-4 backdrop-blur-md relative z-20">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
+    <div className="w-full max-w-[100vw] overflow-hidden border-b border-inherit bg-current/5 py-2.5 px-3 sm:px-4 backdrop-blur-md relative z-20">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5 text-xs">
         {/* Left: Flash Sale Tag & Timer */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full luxury-badge font-bold tracking-wider uppercase">
-            <Flame className="w-3.5 h-3.5 text-rose-500 fill-rose-500 animate-pulse" />
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full luxury-badge font-bold tracking-wider uppercase text-[10px] sm:text-xs">
+            <Flame className="w-3.5 h-3.5 text-rose-500 fill-rose-500 animate-pulse shrink-0" />
             <span>FLASH DROP ACTIVE</span>
           </div>
 
-          <div className="flex items-center gap-1.5 font-medium opacity-85">
-            <Clock className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Drop Ends in:</span>
+          <div className="flex items-center gap-1.5 font-medium opacity-85 text-[11px] sm:text-xs">
+            <Clock className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+            <span>Ends:</span>
             <span className="font-mono font-bold px-2 py-0.5 rounded luxury-badge">
               {formatTimeRemaining(timeLeftMs)}
             </span>
@@ -59,26 +59,26 @@ export default function FlashSaleBanner({ flashProduct, onQuickReserve }: FlashS
         </div>
 
         {/* Center/Right: Concurrency Telemetry & Stock Lock CTA */}
-        <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-2 opacity-80">
+        <div className="flex items-center justify-between sm:justify-end gap-3">
+          <div className="hidden sm:flex items-center gap-2 opacity-80 text-[11px] sm:text-xs">
             <Activity className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
             <span>
-              <strong className="font-mono text-cyan-400">{activeConcurrentShoppers.toLocaleString()}</strong> live shoppers
+              <strong className="font-mono text-cyan-400">{activeConcurrentShoppers.toLocaleString()}</strong> shoppers
             </span>
             <span className="opacity-40">|</span>
             <span className="flex items-center gap-1 text-cyan-400">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>{percentageReserved}% Locked in Redis</span>
+              <span>{percentageReserved}% Locked</span>
             </span>
           </div>
 
           <button
             onClick={() => onQuickReserve(flashProduct)}
-            className="luxury-button py-1.5 px-3 text-xs flex items-center gap-1.5"
+            className="luxury-button w-full sm:w-auto py-1.5 px-3 text-xs flex items-center justify-center gap-1.5"
           >
-            <Zap className="w-3.5 h-3.5" />
+            <Zap className="w-3.5 h-3.5 shrink-0" />
             <span>Lock Stock (${flashProduct.price})</span>
-            <ArrowRight className="w-3 h-3" />
+            <ArrowRight className="w-3 h-3 shrink-0" />
           </button>
         </div>
       </div>
