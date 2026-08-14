@@ -99,6 +99,7 @@ export default function ProductDetailModal({
                   <img
                     src={product.images[selectedImageIndex] || product.images[0]}
                     alt={product.title}
+                    referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -111,7 +112,7 @@ export default function ProductDetailModal({
                         selectedImageIndex === idx ? 'border-cyan-400 scale-105' : 'border-white/10 opacity-60'
                       }`}
                     >
-                      <img src={img} alt="thumb" className="w-full h-full object-cover" />
+                      <img src={img} alt="thumb" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                     </button>
                   ))}
                 </div>

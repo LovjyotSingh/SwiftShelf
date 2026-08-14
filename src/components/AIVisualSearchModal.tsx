@@ -194,6 +194,7 @@ export default function AIVisualSearchModal({
                     <img
                       src={product.images[0]}
                       alt={product.title}
+                      referrerPolicy="no-referrer"
                       className="w-12 h-12 rounded-lg object-cover bg-slate-950"
                     />
                     <div>

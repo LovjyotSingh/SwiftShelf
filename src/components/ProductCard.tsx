@@ -14,7 +14,6 @@ interface ProductCardProps {
 export default function ProductCard({ product, onAddToCart, onInspect }: ProductCardProps) {
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(product.variants[0]);
   const [isAdding, setIsAdding] = useState(false);
-  const [imageError, setImageError] = useState(false);
 
   const handleAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -30,25 +29,17 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
   return (
     <div
       onClick={() => onInspect(product)}
-      className="group glass-card rounded-2xl p-4 flex flex-col justify-between cursor-pointer border border-white/5 hover:border-indigo-500/30 transition-all duration-300 relative overflow-hidden bg-slate-900/60"
+      className="group glass-card rounded-2xl p-4 flex flex-col justify-between cursor-pointer border border-white/5 hover:border-indigo-500/40 transition-all duration-300 relative overflow-hidden bg-slate-900/60 shadow-lg"
     >
       {/* Product Image & Badges Container */}
-      <div className="relative w-full h-56 rounded-xl bg-slate-950 overflow-hidden mb-4 flex items-center justify-center">
-        {!imageError && currentImageSrc ? (
-          <img
-            src={currentImageSrc}
-            alt={product.title}
-            onError={() => setImageError(true)}
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-slate-900 to-indigo-950/40 flex flex-col items-center justify-center text-slate-500 space-y-2 p-4 text-center">
-            <Box className="w-10 h-10 text-cyan-400" />
-            <span className="text-xs font-bold text-slate-300">{product.title}</span>
-            <span className="text-[10px] text-slate-500">3D Interactive Mesh Ready</span>
-          </div>
-        )}
+      <div className="relative w-full h-56 rounded-xl bg-[#07090E] overflow-hidden mb-4 flex items-center justify-center">
+        <img
+          src={currentImageSrc}
+          alt={product.title}
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+        />
 
         {/* Badge */}
         {product.badge && (
@@ -65,14 +56,14 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
           </div>
         )}
 
-        {/* 3D Inspect Trigger Overlay */}
-        <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded-lg bg-slate-900/80 backdrop-blur-md border border-white/10 text-slate-300 text-[10px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+        {/* Inspect Trigger Overlay */}
+        <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/90 backdrop-blur-md border border-white/10 text-cyan-300 text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity shadow-md">
           <Box className="w-3 h-3 text-cyan-400" />
-          <span>3D View</span>
+          <span>Interactive View</span>
         </div>
 
         {/* Stock Level Bar */}
-        <div className="absolute bottom-2 left-2 right-2 px-2.5 py-1 rounded-lg bg-slate-950/80 backdrop-blur-md border border-white/5 flex items-center justify-between text-[11px]">
+        <div className="absolute bottom-2 left-2 right-2 px-2.5 py-1 rounded-lg bg-slate-950/85 backdrop-blur-md border border-white/5 flex items-center justify-between text-[11px]">
           <span className="text-slate-400">Stock Availability</span>
           <span
             className={`font-semibold ${
@@ -145,10 +136,10 @@ export default function ProductCard({ product, onAddToCart, onInspect }: Product
         <button
           onClick={handleAdd}
           disabled={isAdding}
-          className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+          className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
             isAdding
               ? 'bg-emerald-600 text-white'
-              : 'bg-indigo-600/90 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 active:scale-95'
+              : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 active:scale-95'
           }`}
         >
           {isAdding ? (

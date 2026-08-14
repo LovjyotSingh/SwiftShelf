@@ -145,6 +145,7 @@ export default function CartDrawer({
                   <img
                     src={item.image}
                     alt={item.title}
+                    referrerPolicy="no-referrer"
                     className="w-14 h-14 rounded-lg object-cover bg-slate-950 shrink-0"
                   />
 
