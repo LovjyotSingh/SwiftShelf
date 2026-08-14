@@ -256,7 +256,7 @@ export default function ProductDetailModal({
           <ReviewSection
             productId={product.id}
             reviews={product.reviews || []}
-            onAddReview={onAddReview}
+            onAddReview={(review) => onAddReview(product.id, review)}
           />
         </div>
       </div>
