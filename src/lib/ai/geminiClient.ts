@@ -7,7 +7,8 @@ export interface ChatMessage {
 }
 
 export class AIService {
-  private static apiKey = process.env.GEMINI_API_KEY;
+  // Default Recommended Model: gemini-1.5-flash (ultra-low latency, free tier supported)
+  private static modelName = 'gemini-1.5-flash';
 
   /**
    * Conversational AI Concierge for Command Palette and Assistant
@@ -17,6 +18,7 @@ export class AIService {
     suggestedProducts: Product[];
     filterAction?: { category?: string; maxPrice?: number };
   }> {
+    const apiKey = process.env.GEMINI_API_KEY;
     const lowerPrompt = userPrompt.toLowerCase();
 
     // Identify category & price intent
@@ -45,7 +47,53 @@ export class AIService {
 
     const fallbackProducts = matchedProducts.length > 0 ? matchedProducts : INITIAL_PRODUCTS.slice(0, 3);
 
-    // Formulate response
+    // If Gemini API Key is provided, call live Google Gemini API
+    if (apiKey && apiKey.startsWith('AIzaSy')) {
+      try {
+        const catalogContext = INITIAL_PRODUCTS.map(
+          (p) => `- ${p.title} ($${p.price}, ${p.category}): ${p.subtitle}. Specs: ${JSON.stringify(p.specs)}`
+        ).join('\n');
+
+        const systemPrompt = `You are the SwiftShelf Luxury Hardware Concierge. You assist customers looking for audiophile headphones, titanium smartwatches, ergonomic seating, 6K OLED displays, and mechanical keyboards. Keep answers concise, knowledgeable, sophisticated, and directly reference our catalog:\n${catalogContext}`;
+
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${this.modelName}:generateContent?key=${apiKey}`;
+
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              {
+                parts: [
+                  { text: systemPrompt },
+                  { text: `Customer Query: ${userPrompt}` },
+                ],
+              },
+            ],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 250,
+            },
+          }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (generatedText) {
+            return {
+              reply: generatedText.trim(),
+              suggestedProducts: fallbackProducts,
+              filterAction: matchedCategory ? { category: matchedCategory } : undefined,
+            };
+          }
+        }
+      } catch (e) {
+        console.warn('[Gemini API] Direct API call error, using local fallback:', e);
+      }
+    }
+
+    // Intelligent Local Engine Fallback
     let reply = `Here are our top-rated recommendations tailored for "${userPrompt}". `;
     if (matchedCategory) {
       reply += `I've filtered our luxury **${matchedCategory}** collection designed with aerospace-grade durability and high-precision engineering.`;
