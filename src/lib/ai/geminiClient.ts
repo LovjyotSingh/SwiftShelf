@@ -7,8 +7,8 @@ export interface ChatMessage {
 }
 
 export class AIService {
-  // Default Recommended Model: gemini-1.5-flash (ultra-low latency, free tier supported)
-  private static modelName = 'gemini-1.5-flash';
+  // Default Recommended Model: gemini-3.5-flash-lite (ultra-low latency, high throughput, free tier supported)
+  private static modelName = 'gemini-3.5-flash-lite';
 
   /**
    * Conversational AI Concierge for Command Palette and Assistant
